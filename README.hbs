@@ -1,0 +1,15 @@
+# daypack
+A JavaScript library for flattening and reassembling object graphs.
+
+# purpose
+This library was written to handle packing up deep JS object graphs to send over the wire.
+It does this by traversing the entire graph recursively, and packing entities into a flat data structure.
+
+This library is similar to normalizr, but with a few differences:
+- All ids need to be unique.
+- You don't need to define a schema, or know the type of an entity to pack/unpack it.
+- You can use this library to serialize/deserialize JS class instances, as long as you register a custom packer/unpacker for it.
+
+# api
+
+{{>main}}
