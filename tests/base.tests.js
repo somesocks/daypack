@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-const spider = require('../src');
+const daypack = require('../src');
 
 const AssertTest = require('./AssertTest');
 const PerformanceTest = require('./PerformanceTest');
@@ -8,7 +8,7 @@ const PerformanceTest = require('./PerformanceTest');
 const TESTS = [
 	{
 		label: 'basic test',
-		call: spider.pack,
+		call: daypack.pack,
 		input: {
 			id: 'order.123',
 			item: {
@@ -41,9 +41,33 @@ const TESTS = [
 	},
 	{
 		label: 'large test 2',
-		call: spider.pack,
+		call: daypack.pack,
 		input: require('./reddit.json'),
-		expected: spider.pack(require('./reddit.json')),
+		expected: daypack.pack(require('./reddit.json')),
+	},
+	{
+		label: 'date test 1',
+		call: daypack.pack,
+		input: new Date(1496906844700),
+		expected: daypack.pack(new Date(1496906844700)),
+	},
+	{
+		label: 'date test 2',
+		call: (val) => daypack.unpack(daypack.pack(val)),
+		input: new Date(1496906844700),
+		expected: daypack.unpack(daypack.pack(new Date(1496906844700))),
+	},
+	{
+		label: 'regexp test 1',
+		call: (val) => daypack.pack(val),
+		input: /^a+$/gi,
+		expected: daypack.pack(/^a+$/gi),
+	},
+	{
+		label: 'regexp test 2',
+		call: (val) => daypack.unpack(daypack.pack(val)),
+		input: /^a+$/gi,
+		expected: daypack.unpack(daypack.pack(/^a+$/gi)),
 	},
 ];
 

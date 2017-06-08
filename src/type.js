@@ -2,6 +2,8 @@
 const isArray = Array.isArray ||
 	((val) => Object.prototype.toString.call(val) === '[object Array]');
 
+const isString = (val) => (typeof val === 'string') || (val instanceof String);
+
 const type = (thing) => {
 	const type = typeof thing;
 
@@ -19,14 +21,14 @@ const type = (thing) => {
 			return 'null';
 		} else if (isArray(thing)) {
 			return 'array';
-		} else if (thing.__proto__ != null && thing.__proto__.name != null) {
-			return thing.__proto__.name.toLowerCase();
-		} else if (thing.prototype != null && thing.prototype.name != null) {
-			return thing.prototype.name.toLowerCase();
-		} else if (thing.constructor != null && thing.constructor.name != null) {
-			return thing.constructor.name.toLowerCase();
-		} else if (thing.type != null) {
+		} else if (isString(thing.type)) {
 			return thing.type.toLowerCase();
+		} else if (thing.__proto__ != null && isString(thing.__proto__.name)) {
+			return thing.__proto__.name.toLowerCase();
+		} else if (thing.prototype != null && isString(thing.prototype.name)) {
+			return thing.prototype.name.toLowerCase();
+		} else if (thing.constructor != null && isString(thing.constructor.name)) {
+			return thing.constructor.name.toLowerCase();
 		} else {
 			return 'object';
 		}
