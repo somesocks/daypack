@@ -1,6 +1,6 @@
 {
   "name": "daypack",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A JavaScript library for flattening and reassembling object graphs.",
   "main": "dist/daypack.js",
   "scripts": {},

@@ -4,16 +4,13 @@ module.exports = {
 		const { store } = this;
 
 		const packed = {
-			id: `regexp.${val.source}.${val.flags}.${val.lastIndex}`,
 			type: 'regexp',
 			source: val.source,
 			flags: val.flags,
 			lastIndex: val.lastIndex,
 		};
 
-		store(packed);
-
-		return packed.id;
+		return packed;
 	},
 	unpack: function (val) {
 		const re = new RegExp(val.source, val.flags);
