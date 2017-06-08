@@ -81,6 +81,24 @@ const TESTS = [
 		expected: daypack.unpack(daypack.pack(/^a+$/gi)),
 	},
 	{
+		label: 'circular pack test 1',
+		call: daypack.pack,
+		input: obj1,
+		expected: {
+			result: 'obj.1',
+			entities: {
+				'obj.1': {
+					id: 'obj.1',
+					ref: 'obj.2',
+				},
+				'obj.2': {
+					id: 'obj.2',
+					ref: 'obj.1',
+				},
+			},
+		},
+	},
+	{
 		label: 'circular unpack test 1',
 		call: daypack.unpack,
 		input: {

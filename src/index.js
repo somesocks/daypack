@@ -44,7 +44,7 @@ const pack = function (val) {
 	const entities = {};
 	const context = {};
 
-	context.unpack_cache = {};
+	context.pack_cache = {};
 	context.store = (entity) => { entities[entity.id] = entity; };
 	context.fetch = (id) => entities[id];
 	context.pack = _pack.bind(context);

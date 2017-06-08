@@ -10,6 +10,7 @@ const AssertTest = (test) => {
 		const { call, input, expected } = test;
 
 		const output = isArray(input) ? call(...input) : call(input);
+		console.log('assert test io', input, output);
 
 		assert.deepEqual(output, expected);
 		done();

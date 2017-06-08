@@ -17,23 +17,38 @@ const objmap = (obj, map, into) => {
 
 module.exports = {
 	pack: function (val) {
-		const { pack, store } = this;
-		val = objmap(val, pack);
+		const { pack, pack_cache, store } = this;
 		if (isString(val.id)) {
-			store(val);
-			return val.id;
+			const cached = pack_cache[val.id];
+			if (cached) {
+				return cached.id;
+			} else {
+				const packed = Object.assign({}, val);
+				pack_cache[packed.id] = packed;
+				objmap(val, pack, packed);
+				store(packed);
+				return packed.id;
+			}
 		} else {
-			return val;
+			const packed = Object.assign({}, val);
+			objmap(val, pack, packed);
+			return packed;
 		}
 	},
 	unpack: function (val) {
 		const { unpack, unpack_cache } = this;
-		const cached = unpack_cache[val.id];
-		if (cached) {
-			return cached;
+		if (isString(val.id)) {
+			const cached = unpack_cache[val.id];
+			if (cached) {
+				return cached;
+			} else {
+				const unpacked = Object.assign({}, val);
+				unpack_cache[unpacked.id] = unpacked;
+				objmap(val, unpack, unpacked);
+				return unpacked;
+			}
 		} else {
 			const unpacked = Object.assign({}, val);
-			unpack_cache[unpacked.id] = unpacked;
 			objmap(val, unpack, unpacked);
 			return unpacked;
 		}
