@@ -5,6 +5,17 @@ const daypack = require('../src');
 const AssertTest = require('./AssertTest');
 const PerformanceTest = require('./PerformanceTest');
 
+const obj1 = {
+	id: 'obj.1',
+};
+
+const obj2 = {
+	id: 'obj.2',
+};
+
+obj1.ref = obj2;
+obj2.ref = obj1;
+
 const TESTS = [
 	{
 		label: 'basic test',
@@ -68,6 +79,24 @@ const TESTS = [
 		call: (val) => daypack.unpack(daypack.pack(val)),
 		input: /^a+$/gi,
 		expected: daypack.unpack(daypack.pack(/^a+$/gi)),
+	},
+	{
+		label: 'circular unpack test 1',
+		call: daypack.unpack,
+		input: {
+			result: 'obj.1',
+			entities: {
+				'obj.1': {
+					id: 'obj.1',
+					ref: 'obj.2',
+				},
+				'obj.2': {
+					id: 'obj.2',
+					ref: 'obj.1',
+				},
+			},
+		},
+		expected: obj1,
 	},
 ];
 

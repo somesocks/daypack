@@ -1,8 +1,8 @@
 
 const isString = (val) => (typeof val === 'string') || (val instanceof String);
 
-const objmap = (obj, map) => {
-	let temp = {};
+const objmap = (obj, map, into) => {
+	let temp = into || {};
 
 	temp.id = obj.id;
 
@@ -27,8 +27,15 @@ module.exports = {
 		}
 	},
 	unpack: function (val) {
-		const { unpack } = this;
-		val = objmap(val, unpack);
-		return val;
+		const { unpack, unpack_cache } = this;
+		const cached = unpack_cache[val.id];
+		if (cached) {
+			return cached;
+		} else {
+			const unpacked = Object.assign({}, val);
+			unpack_cache[unpacked.id] = unpacked;
+			objmap(val, unpack, unpacked);
+			return unpacked;
+		}
 	},
 };
