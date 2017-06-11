@@ -1,10 +1,12 @@
 
+const config = require('../config');
+
 module.exports = {
 	pack: function (val) {
 		const { store } = this;
 
 		const packed = {
-			type: 'regexp',
+			[config.TYPE_KEY]: 'regexp',
 			source: val.source,
 			flags: val.flags,
 			lastIndex: val.lastIndex,
