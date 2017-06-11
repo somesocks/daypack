@@ -1,5 +1,6 @@
 /** @namespace daypack */
 
+const config = require('./config');
 const packers = require('./packers');
 
 
@@ -45,7 +46,7 @@ const pack = function (val) {
 	const context = {};
 
 	context.pack_cache = {};
-	context.store = (entity) => { entities[entity.id] = entity; };
+	context.store = (entity) => { entities[entity[config.ID_KEY]] = entity; };
 	context.fetch = (id) => entities[id];
 	context.pack = _pack.bind(context);
 	context.unpack = _unpack.bind(context);
@@ -64,7 +65,7 @@ const unpack = function ({ result, entities }) {
 	const context = {};
 
 	context.unpack_cache = {};
-	context.store = (entity) => { entities[entity.id] = entity; };
+	context.store = (entity) => { entities[entity[config.ID_KEY]] = entity; };
 	context.fetch = (id) => entities[id];
 	context.pack = _pack.bind(context);
 	context.unpack = _unpack.bind(context);
@@ -74,6 +75,7 @@ const unpack = function ({ result, entities }) {
 };
 
 module.exports = {
+	config,
 	packers,
 	type,
 	register,

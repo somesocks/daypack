@@ -1,8 +1,10 @@
 
+const config = require('../config');
+
 module.exports = {
 	pack: function (val) {
 		return {
-			type: 'date',
+			[config.TYPE_KEY]: 'date',
 			value: val.getTime(),
 		};
 	},
