@@ -1,7 +1,7 @@
 
 module.exports = {
 	pack: function (val) {
-		const { store, type_key, serialize } = this;
+		const { type_key, serialize } = this;
 
 		if (serialize) {
 			const packed = {
