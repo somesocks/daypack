@@ -43,6 +43,10 @@ const _unpack = function (val, _type) {
 /**
 * A function that packs a JavaScript value.
 * @param val - the value to pack
+* @param {Object} options - an options options object
+* @param {String} options.id_key='id' - the name of the id key for each object.
+* @param {String} options.type_key='class' - the name of the type key for each object.
+* @param {String} options.serialize=false - serialize objects as well as normalize.
 * @returns an flattened object with 'result' and 'entities' properties
 * @memberof daypack
 */
