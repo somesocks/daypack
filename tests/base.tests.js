@@ -20,18 +20,26 @@ const TESTS = [
 	{
 		label: 'basic test',
 		call: daypack.pack,
-		input: {
-			id: 'order.123',
-			item: {
-				id: 'item.123',
-				name: 'some item',
+		input: [
+			{
+				id: 'order.123',
+				item: {
+					id: 'item.123',
+					name: 'some item',
+				},
+				for: {
+					id: 'user.123',
+					name: 'test user',
+				},
 			},
-			for: {
-				id: 'user.123',
-				name: 'test user',
+			{
+				id_key: 'id',
+				type_key: 'type',
+				serialize: true,
 			},
-		},
+		],
 		expected: {
+			__daypack: true,
 			result: 'order.123',
 			entities: {
 				'item.123': {
@@ -47,6 +55,11 @@ const TESTS = [
 					item: 'item.123',
 					for: 'user.123',
 				},
+			},
+			options: {
+				id_key: 'id',
+				type_key: 'type',
+				serialize: true,
 			},
 		},
 	},
@@ -85,6 +98,7 @@ const TESTS = [
 		call: daypack.pack,
 		input: obj1,
 		expected: {
+			__daypack: true,
 			result: 'obj.1',
 			entities: {
 				'obj.1': {
@@ -95,6 +109,11 @@ const TESTS = [
 					id: 'obj.2',
 					ref: 'obj.1',
 				},
+			},
+			options: {
+				id_key: 'id',
+				serialize: false,
+				type_key: 'class',
 			},
 		},
 	},

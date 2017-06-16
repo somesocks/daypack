@@ -3,6 +3,10 @@
 const config = require('./config');
 const packers = require('./packers');
 
+const isObject = (val) =>
+	val !== null
+	&& (typeof val === 'function' || typeof val === 'object');
+
 
 /**
 * A function that returns the type of a JavaScript value.
@@ -35,24 +39,42 @@ const _unpack = function (val, _type) {
 	return packer.unpack.call(this, val);
 };
 
+
 /**
 * A function that packs a JavaScript value.
 * @param val - the value to pack
 * @returns an flattened object with 'result' and 'entities' properties
 * @memberof daypack
 */
-const pack = function (val) {
+const pack = function (val, options) {
+	if (isObject(val) && val.__daypack) { return val; } // already packed
+
+	options = options || {};
+
 	const entities = {};
-	const context = {};
+	const context = {
+		id_key: options.id_key || config.id_key,
+		type_key: options.type_key || config.type_key,
+		serialize: options.serialize || config.serialize,
+	};
 
 	context.pack_cache = {};
-	context.store = (entity) => { entities[entity[config.ID_KEY]] = entity; };
+	context.store = (entity) => { entities[entity[context.id_key]] = entity; };
 	context.fetch = (id) => entities[id];
 	context.pack = _pack.bind(context);
 	context.unpack = _unpack.bind(context);
 
 	const result = context.pack(val);
-	return { result, entities };
+	return {
+		__daypack: true,
+		options: {
+			id_key: context.id_key,
+			type_key: context.type_key,
+			serialize: context.serialize,
+		},
+		result,
+		entities,
+	};
 };
 
 /**
@@ -61,17 +83,27 @@ const pack = function (val) {
 * @returns the unpacked value
 * @memberof daypack
 */
-const unpack = function ({ result, entities }) {
-	const context = {};
+const unpack = function (val) {
+	if (!isObject(val)) { return val; } // can't unpack
+
+	const result = val.result;
+	const options = val.options || {};
+	const entities = val.entities || {};
+
+	const context = {
+		id_key: options.id_key || config.id_key,
+		type_key: options.type_key || config.type_key,
+		serialize: options.serialize || config.serialize,
+	};
 
 	context.unpack_cache = {};
-	context.store = (entity) => { entities[entity[config.ID_KEY]] = entity; };
+	context.store = (entity) => { entities[entity[context.id_key]] = entity; };
 	context.fetch = (id) => entities[id];
 	context.pack = _pack.bind(context);
 	context.unpack = _unpack.bind(context);
 
-	const val = context.unpack(result);
-	return val;
+	const unpacked = context.unpack(result);
+	return unpacked;
 };
 
 module.exports = {

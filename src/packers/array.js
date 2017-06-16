@@ -1,5 +1,5 @@
 
-const arrmap = (arr, map) => {
+const arrmap = function (arr, map) {
 	let temp = [];
 
 	for (let i = 0; i < arr.length; i++) {

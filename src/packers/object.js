@@ -1,15 +1,15 @@
 
-const config = require('../config');
-
 const isString = (val) => (typeof val === 'string') || (val instanceof String);
 
-const objmap = (obj, map, into) => {
+const objmap = function (obj, map, into) {
+	const { id_key } = this;
+
 	let temp = into || {};
 
-	temp[config.ID_KEY] = obj[config.ID_KEY];
+	temp[id_key] = obj[id_key];
 
 	for (const key in obj) {
-		if (key !== config.ID_KEY && obj.hasOwnProperty(key)) {
+		if (key !== id_key && obj.hasOwnProperty(key)) {
 			temp[key] = map(obj[key]);
 		}
 	}
@@ -19,39 +19,40 @@ const objmap = (obj, map, into) => {
 
 module.exports = {
 	pack: function (val) {
-		const { pack, pack_cache, store } = this;
-		if (isString(val[config.ID_KEY])) {
-			const cached = pack_cache[val[config.ID_KEY]];
+		const { pack, pack_cache, store, id_key } = this;
+		if (isString(val[id_key])) {
+			const cached = pack_cache[val[id_key]];
 			if (cached) {
-				return cached[config.ID_KEY];
+				return cached[id_key];
 			} else {
 				const packed = Object.assign({}, val);
-				pack_cache[packed[config.ID_KEY]] = packed;
-				objmap(val, pack, packed);
+				pack_cache[packed[id_key]] = packed;
+				objmap.call(this, val, pack, packed);
 				store(packed);
-				return packed[config.ID_KEY];
+				return packed[id_key];
 			}
 		} else {
 			const packed = Object.assign({}, val);
-			objmap(val, pack, packed);
+			objmap.call(this, val, pack, packed);
 			return packed;
 		}
 	},
 	unpack: function (val) {
-		const { unpack, unpack_cache } = this;
-		if (isString(val[config.ID_KEY])) {
-			const cached = unpack_cache[val[config.ID_KEY]];
+		const { unpack, unpack_cache, id_key } = this;
+
+		if (isString(val[id_key])) {
+			const cached = unpack_cache[val[id_key]];
 			if (cached) {
 				return cached;
 			} else {
 				const unpacked = Object.assign({}, val);
-				unpack_cache[unpacked[config.ID_KEY]] = unpacked;
-				objmap(val, unpack, unpacked);
+				unpack_cache[unpacked[id_key]] = unpacked;
+				objmap.call(this, val, unpack, unpacked);
 				return unpacked;
 			}
 		} else {
 			const unpacked = Object.assign({}, val);
-			objmap(val, unpack, unpacked);
+			objmap.call(this, val, unpack, unpacked);
 			return unpacked;
 		}
 	},

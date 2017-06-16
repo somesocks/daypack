@@ -1,14 +1,28 @@
 
-const config = require('../config');
-
 module.exports = {
 	pack: function (val) {
-		return {
-			[config.TYPE_KEY]: 'date',
-			value: val.getTime(),
-		};
+		const { type_key, serialize } = this;
+
+		if (serialize) {
+			val = {
+				[type_key]: 'date',
+				value: val.getTime(),
+			};
+		} else {
+			val = new Date(val.getTime());
+		}
+
+		return val;
 	},
 	unpack: function (val) {
-		return new Date(val.value);
+		const { serialize } = this;
+
+		if (serialize) {
+			val = new Date(val.value);
+		} else {
+			val = new Date(val.getTime());
+		}
+
+		return val;
 	},
 };
