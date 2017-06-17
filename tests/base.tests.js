@@ -135,10 +135,22 @@ const TESTS = [
 		},
 		expected: obj1,
 	},
+	{
+		label: 'serialize test',
+		call: (val) => daypack.unpack(daypack.pack(val, { serialize: true })),
+		input: {
+			id: 'obj.1',
+			date: new Date(1000000),
+		},
+		expected: {
+			id: 'obj.1',
+			date: new Date(1000000),
+		},
+	},
 ];
 
 
-describe('spider tests', () => {
+describe('daypack tests', () => {
 	describe('assert tests', () => { TESTS.forEach(AssertTest); });
 
 	describe('performance tests', () => { TESTS.forEach(PerformanceTest); });

@@ -26,14 +26,14 @@ const type = require('./type');
 const register = (type, pack, unpack) => { packers[type] = { pack, unpack }; };
 
 const _pack = function (val, _type) {
-	_type = _type || type(val);
+	_type = _type || type.call(this, val);
 	const packer = packers[_type];
 	if (!packer) { throw new Error('day-pack: no packer for type ' + _type + " " + JSON.stringify(val)); }
 	return packer.pack.call(this, val);
 };
 
 const _unpack = function (val, _type) {
-	_type = _type || type(val);
+	_type = _type || type.call(this, val);
 	const packer = packers[_type];
 	if (!packer) { throw new Error('day-pack: no unpacker for type ' + _type); }
 	return packer.unpack.call(this, val);

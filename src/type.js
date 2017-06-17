@@ -1,12 +1,12 @@
 
-const config = require('./config');
-
 const isArray = Array.isArray ||
 	((val) => Object.prototype.toString.call(val) === '[object Array]');
 
 const isString = (val) => (typeof val === 'string') || (val instanceof String);
 
-const type = (thing) => {
+const type = function (thing) {
+	const { type_key } = this;
+
 	const type = typeof thing;
 
 	switch (type) {
@@ -23,8 +23,8 @@ const type = (thing) => {
 			return 'null';
 		} else if (isArray(thing)) {
 			return 'array';
-		} else if (isString(thing[config.TYPE_KEY])) {
-			return thing[config.TYPE_KEY].toLowerCase();
+		} else if (isString(thing[type_key])) {
+			return thing[type_key].toLowerCase();
 		} else if (thing.__proto__ != null && isString(thing.__proto__.name)) {
 			return thing.__proto__.name.toLowerCase();
 		} else if (thing.prototype != null && isString(thing.prototype.name)) {

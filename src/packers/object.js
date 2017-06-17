@@ -6,11 +6,13 @@ const objmap = function (obj, map, into) {
 
 	let temp = into || {};
 
-	temp[id_key] = obj[id_key];
+	if (obj[id_key] != null) {
+		temp[id_key] = obj[id_key];
+	}
 
 	for (const key in obj) {
 		if (key !== id_key && obj.hasOwnProperty(key)) {
-			temp[key] = map(obj[key]);
+			temp[key] = map.call(this, obj[key]);
 		}
 	}
 
@@ -39,7 +41,6 @@ module.exports = {
 	},
 	unpack: function (val) {
 		const { unpack, unpack_cache, id_key } = this;
-
 		if (isString(val[id_key])) {
 			const cached = unpack_cache[val[id_key]];
 			if (cached) {

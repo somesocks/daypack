@@ -16,13 +16,10 @@ module.exports = {
 	},
 	unpack: function (val) {
 		const { serialize } = this;
-
 		if (serialize) {
-			val = new Date(val.value);
+			return new Date(val.value);
 		} else {
-			val = new Date(val.getTime());
+			return new Date(val.getTime());
 		}
-
-		return val;
 	},
 };
