@@ -88,7 +88,7 @@ const pack = function (val, options) {
 * @memberof daypack
 */
 const unpack = function (val) {
-	if (!isObject(val)) { return val; } // can't unpack
+	if (!(isObject(val) && val.__daypack)) { return val; } // already unpacked
 
 	const result = val.result;
 	const options = val.options || {};
