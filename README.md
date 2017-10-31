@@ -18,55 +18,24 @@ This library is similar to normalizr, but with a few differences:
 **Kind**: global namespace  
 
 * [daypack](#daypack) : <code>object</code>
-    * [.type](#daypack.type) ⇒
-    * [.register(type, pack, unpack)](#daypack.register)
-    * [.pack(val, options)](#daypack.pack) ⇒
-    * [.unpack(val)](#daypack.unpack) ⇒
+    * [.Daypack.pack(val)](#daypack.Daypack.pack) ⇒
+    * [.Daypack.unpack(val)](#daypack.Daypack.unpack) ⇒
 
-<a name="daypack.type"></a>
+<a name="daypack.Daypack.pack"></a>
 
-### daypack.type ⇒
-A function that returns the type of a JavaScript value.
-
-**Kind**: static constant of <code>[daypack](#daypack)</code>  
-**Returns**: a type string  
-
-| Param | Description |
-| --- | --- |
-| val | the value to find the type of |
-
-<a name="daypack.register"></a>
-
-### daypack.register(type, pack, unpack)
-A function to register a packer/unpacker for a type.
-
-**Kind**: static method of <code>[daypack](#daypack)</code>  
-
-| Param | Description |
-| --- | --- |
-| type | the type string |
-| pack | the packing function |
-| unpack | the unpacking function |
-
-<a name="daypack.pack"></a>
-
-### daypack.pack(val, options) ⇒
+### daypack.Daypack.pack(val) ⇒
 A function that packs a JavaScript value.
 
 **Kind**: static method of <code>[daypack](#daypack)</code>  
-**Returns**: an flattened object with 'result' and 'entities' properties  
+**Returns**: an flattened object  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| val |  |  | the value to pack |
-| options | <code>Object</code> |  | an options options object |
-| options.id_key | <code>String</code> | <code>&#x27;id&#x27;</code> | the name of the id key for each object. |
-| options.type_key | <code>String</code> | <code>&#x27;class&#x27;</code> | the name of the type key for each object. |
-| options.serialize | <code>String</code> | <code>false</code> | serialize objects as well as normalize. |
+| Param | Description |
+| --- | --- |
+| val | the value to pack |
 
-<a name="daypack.unpack"></a>
+<a name="daypack.Daypack.unpack"></a>
 
-### daypack.unpack(val) ⇒
+### daypack.Daypack.unpack(val) ⇒
 A function that unpacks a JavaScript value.
 
 **Kind**: static method of <code>[daypack](#daypack)</code>  

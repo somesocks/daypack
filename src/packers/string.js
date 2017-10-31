@@ -1,17 +1,22 @@
 
+
+const pack = (val, context) => val;
+
+const unpack = (val, context) => {
+	const { unpack, packed, unpacked } = context;
+
+	const entity = packed[val];
+
+	return entity != null ? unpack(entity, context) : val;
+};
+
+const serialize = (val, context) => val;
+
+const deserialize = (val, context) => val;
+
 module.exports = {
-	pack: function (val) {
-		return val;
-	},
-	unpack: function (val) {
-		const { fetch, unpack } = this;
-
-		const entity = fetch(val);
-
-		if (entity != null) {
-			return unpack(entity);
-		} else {
-			return val;
-		}
-	},
+	pack,
+	unpack,
+	serialize,
+	deserialize,
 };

@@ -1,35 +1,34 @@
 
+
+const pack = (val, context) => RegExp(val.source, val.flags);
+
+const unpack = (val, context) => RegExp(val.source, val.flags);
+
+const serialize = (val, context) => {
+	const { serialize, type_key } = context;
+
+	const res = {
+		[type_key]: 'regexp',
+		source: val.source,
+		flags: val.flags,
+		lastIndex: val.lastIndex,
+	};
+
+	return res;
+};
+
+const deserialize = (val, context) => {
+	const { deserialize, type_key } = context;
+
+	const res = new RegExp(val.source, val.flags);
+	res.lastIndex = val.lastIndex;
+
+	return res;
+};
+
 module.exports = {
-	pack: function (val) {
-		const { type_key, serialize } = this;
-
-		if (serialize) {
-			const packed = {
-				[type_key]: 'regexp',
-				source: val.source,
-				flags: val.flags,
-				lastIndex: val.lastIndex,
-			};
-
-			return packed;
-		} else {
-			const packed = new RegExp(val.source, val.flags);
-			packed.lastIndex = val.lastIndex;
-
-			return packed;
-		}
-	},
-	unpack: function (val) {
-		const { serialize } = this;
-
-		if (serialize) {
-			const re = new RegExp(val.source, val.flags);
-			re.lastIndex = val.lastIndex;
-			return re;
-		} else {
-			const re = new RegExp(val.source, val.flags);
-			re.lastIndex = val.lastIndex;
-			return re;
-		}
-	},
+	pack,
+	unpack,
+	serialize,
+	deserialize,
 };

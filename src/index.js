@@ -1,85 +1,115 @@
 /** @namespace daypack */
 
-const config = require('./config');
-const packers = require('./packers');
 
-const isObject = (val) =>
-	val !== null
-	&& (typeof val === 'function' || typeof val === 'object');
+const { pack, unpack, serialize, deserialize } = require('./packers');
 
 
-/**
-* A function that returns the type of a JavaScript value.
-* @param val - the value to find the type of
-* @returns a type string
-* @memberof daypack
-*/
-const type = require('./type');
+const Daypack = function (options = {}) {
+	const _this = Object.create(Daypack.prototype);
+	_this.entities = options.entities || {};
+	_this.type_key = options.type_key || Daypack.TYPE_KEY;
+	_this.id_key = options.id_key || Daypack.ID_KEY;
+	_this.head = options.head || Daypack.HEAD;
 
-/**
-* A function to register a packer/unpacker for a type.
-* @param type - the type string
-* @param pack - the packing function
-* @param unpack - the unpacking function
-* @memberof daypack
-*/
-const register = (type, pack, unpack) => { packers[type] = { pack, unpack }; };
-
-const _pack = function (val, _type) {
-	_type = _type || type.call(this, val);
-	const packer = packers[_type];
-	if (!packer) { throw new Error('day-pack: no packer for type ' + _type + " " + JSON.stringify(val)); }
-	return packer.pack.call(this, val);
+	return _this;
 };
 
-const _unpack = function (val, _type) {
-	_type = _type || type.call(this, val);
-	const packer = packers[_type];
-	if (!packer) { throw new Error('day-pack: no unpacker for type ' + _type); }
-	return packer.unpack.call(this, val);
+Daypack.prototype.pack = function (val) {
+	const { type_key, id_key, head, entities } = this;
+
+	const context = {
+		type_key,
+		id_key,
+		unpacked: {},
+		packed: entities,
+		pack,
+	};
+
+	const res = pack(val, context);
+	entities[head] = res;
+	return this;
 };
 
+Daypack.prototype.unpack = function (val) {
+	const { type_key, id_key, head, entities } = this;
+
+	val = val || head;
+
+	const context = {
+		type_key,
+		id_key,
+		unpacked: {},
+		packed: entities,
+		unpack,
+	};
+
+	return unpack(val, context);
+};
+
+Daypack.prototype.toObject = function () {
+	const { entities } = this;
+
+	return Object.assign({}, entities);
+};
+
+Daypack.prototype.fromObject = function (obj) {
+	const { entities } = this;
+
+	Object.assign(entities, obj);
+
+	return this;
+};
+
+Daypack.prototype.serialize = function () {
+	const { type_key, id_key } = this;
+
+	const context = {
+		type_key,
+		id_key,
+		serialize,
+	};
+
+	const obj = this.toObject();
+
+	return serialize(obj, context);
+};
+
+Daypack.prototype.deserialize = function (obj) {
+	const { type_key, id_key } = this;
+
+	const context = {
+		type_key,
+		id_key,
+		deserialize,
+	};
+
+	obj = deserialize(obj, context);
+	return this.fromObject(obj);
+};
+
+Daypack.prototype.toJSON = function () {
+	const obj = this.serialize;
+	return JSON.stringify(obj);
+};
+
+Daypack.prototype.fromJSON = function (json) {
+	const obj = JSON.parse(json);
+	return this.deserialize(obj);
+};
+
+Daypack.ID_KEY = 'id';
+Daypack.TYPE_KEY = 'type';
+Daypack.HEAD = '__daypack__';
 
 /**
 * A function that packs a JavaScript value.
 * @param val - the value to pack
-* @param {Object} options - an options options object
-* @param {String} options.id_key='id' - the name of the id key for each object.
-* @param {String} options.type_key='class' - the name of the type key for each object.
-* @param {String} options.serialize=false - serialize objects as well as normalize.
-* @returns an flattened object with 'result' and 'entities' properties
+* @returns an flattened object
 * @memberof daypack
 */
-const pack = function (val, options) {
-	if (isObject(val) && val.__daypack) { return val; } // already packed
-
-	options = options || {};
-
-	const entities = {};
-	const context = {
-		id_key: options.id_key || config.id_key,
-		type_key: options.type_key || config.type_key,
-		serialize: options.serialize || config.serialize,
-	};
-
-	context.pack_cache = {};
-	context.store = (entity) => { entities[entity[context.id_key]] = entity; };
-	context.fetch = (id) => entities[id];
-	context.pack = _pack.bind(context);
-	context.unpack = _unpack.bind(context);
-
-	const result = context.pack(val);
-	return {
-		__daypack: true,
-		options: {
-			id_key: context.id_key,
-			type_key: context.type_key,
-			serialize: context.serialize,
-		},
-		result,
-		entities,
-	};
-};
+Daypack.pack = (val) => Daypack()
+	.pack(val)
+	.serialize();
 
 /**
 * A function that unpacks a JavaScript value.
@@ -87,34 +117,15 @@ const pack = function (val, options) {
 * @returns the unpacked value
 * @memberof daypack
 */
-const unpack = function (val) {
-	if (!(isObject(val) && val.__daypack)) { return val; } // already unpacked
+Daypack.unpack = (val) => Daypack()
+	.deserialize(val)
+	.unpack();
 
-	const result = val.result;
-	const options = val.options || {};
-	const entities = val.entities || {};
+Daypack.toJSON = (val) => Daypack()
+	.pack(val)
+	.toJSON();
 
-	const context = {
-		id_key: options.id_key || config.id_key,
-		type_key: options.type_key || config.type_key,
-		serialize: options.serialize || config.serialize,
-	};
+Daypack.fromJSON = (json) => Daypack()
+	.fromJSON(json);
 
-	context.unpack_cache = {};
-	context.store = (entity) => { entities[entity[context.id_key]] = entity; };
-	context.fetch = (id) => entities[id];
-	context.pack = _pack.bind(context);
-	context.unpack = _unpack.bind(context);
-
-	const unpacked = context.unpack(result);
-	return unpacked;
-};
-
-module.exports = {
-	config,
-	packers,
-	type,
-	register,
-	pack,
-	unpack,
-};
+module.exports = Daypack;

@@ -1,5 +1,16 @@
 
+
+const pack = (val, context) => val;
+
+const unpack = (val, context) => val;
+
+const serialize = (val, context) => val;
+
+const deserialize = (val, context) => val;
+
 module.exports = {
-	pack: function (val) { return val; },
-	unpack: function (val) { return val; },
+	pack,
+	unpack,
+	serialize,
+	deserialize,
 };

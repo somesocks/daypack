@@ -4,12 +4,12 @@ const isArray = Array.isArray ||
 
 const isString = (val) => (typeof val === 'string') || (val instanceof String);
 
-const type = function (thing) {
-	const { type_key } = this;
+const type = function (thing, context) {
+	const { type_key } = context;
 
-	const type = typeof thing;
+	const _type = typeof thing;
 
-	switch (type) {
+	switch (_type) {
 	default:
 	case 'undefined':
 	case 'boolean':
@@ -17,7 +17,7 @@ const type = function (thing) {
 	case 'string':
 	case 'symbol':
 	case 'function':
-		return type;
+		return _type;
 	case 'object':
 		if (thing === null) {
 			return 'null';

@@ -1,60 +1,107 @@
 
 const isString = (val) => (typeof val === 'string') || (val instanceof String);
 
-const objmap = function (obj, map, into) {
-	const { id_key } = this;
+const pack = (val, context) => {
+	const { pack, packed, unpacked, id_key } = context;
 
-	let temp = into || {};
+	const id = val[id_key];
 
-	if (obj[id_key] != null) {
-		temp[id_key] = obj[id_key];
-	}
+	if (isString(id)) {
+		const cached = packed[id];
+		if (cached) {
+			return id;
+		} else {
+			const res = {};
+			res[id_key] = id;
+			packed[id] = res;
 
-	for (const key in obj) {
-		if (key !== id_key && obj.hasOwnProperty(key)) {
-			temp[key] = map.call(this, obj[key]);
+			for (const key in val) {
+				if (key !== id_key && val.hasOwnProperty(key)) {
+					res[key] = pack(val[key], context);
+				}
+			}
+
+			return id;
 		}
-	}
+	} else {
+		const res = {};
+		res[id_key] = id;
 
-	return temp;
+		for (const key in val) {
+			if (key !== id_key && val.hasOwnProperty(key)) {
+				res[key] = pack(val[key], context);
+			}
+		}
+
+		return res;
+	}
 };
 
+const unpack = (val, context) => {
+	const { unpack, packed, unpacked, id_key } = context;
+
+	const id = val[id_key];
+
+	if (isString(id)) {
+		const cached = unpacked[id];
+		if (cached) {
+			return cached;
+		} else {
+			const res = {};
+			res[id_key] = id;
+			unpacked[id] = res;
+
+			for (const key in val) {
+				if (key !== id_key && val.hasOwnProperty(key)) {
+					res[key] = unpack(val[key], context);
+				}
+			}
+
+			return res;
+		}
+	} else {
+		const res = {};
+
+		for (const key in val) {
+			if (key !== id_key && val.hasOwnProperty(key)) {
+				res[key] = unpack(val[key], context);
+			}
+		}
+
+		return res;
+	}
+};
+
+const serialize = (val, context) => {
+	const { serialize } = context;
+	const res = {};
+
+	for (const key in val) {
+		if (val.hasOwnProperty(key)) {
+			res[key] = serialize(val[key], context);
+		}
+	}
+
+	return res;
+};
+
+const deserialize = (val, context) => {
+	const { deserialize } = context;
+	const res = {};
+
+	for (const key in val) {
+		if (val.hasOwnProperty(key)) {
+			res[key] = deserialize(val[key], context);
+		}
+	}
+
+	return res;
+};
+
+
 module.exports = {
-	pack: function (val) {
-		const { pack, pack_cache, store, id_key } = this;
-		if (isString(val[id_key])) {
-			const cached = pack_cache[val[id_key]];
-			if (cached) {
-				return cached[id_key];
-			} else {
-				const packed = Object.assign({}, val);
-				pack_cache[packed[id_key]] = packed;
-				objmap.call(this, val, pack, packed);
-				store(packed);
-				return packed[id_key];
-			}
-		} else {
-			const packed = Object.assign({}, val);
-			objmap.call(this, val, pack, packed);
-			return packed;
-		}
-	},
-	unpack: function (val) {
-		const { unpack, unpack_cache, id_key } = this;
-		if (isString(val[id_key])) {
-			const cached = unpack_cache[val[id_key]];
-			if (cached) {
-				return cached;
-			} else {
-				const unpacked = Object.assign({}, val);
-				unpack_cache[unpacked[id_key]] = unpacked;
-				objmap.call(this, val, unpack, unpacked);
-				return unpacked;
-			}
-		} else {
-			const unpacked = Object.assign({}, val);
-			objmap.call(this, val, unpack, unpacked);
-			return unpacked;
-		}
-	},
+	pack,
+	unpack,
+	serialize,
+	deserialize,
 };

@@ -1,25 +1,31 @@
 
+
+const pack = (val, context) => new Date(val.getTime());
+
+const unpack = (val, context) => new Date(val.getTime());
+
+const serialize = (val, context) => {
+	const { serialize, type_key } = context;
+
+	const res = {
+		[type_key]: 'date',
+		value: val.getTime(),
+	};
+
+	return res;
+};
+
+const deserialize = (val, context) => {
+	const { deserialize, type_key } = context;
+
+	const res = new Date(val.value);
+
+	return res;
+};
+
 module.exports = {
-	pack: function (val) {
-		const { type_key, serialize } = this;
-
-		if (serialize) {
-			val = {
-				[type_key]: 'date',
-				value: val.getTime(),
-			};
-		} else {
-			val = new Date(val.getTime());
-		}
-
-		return val;
-	},
-	unpack: function (val) {
-		const { serialize } = this;
-		if (serialize) {
-			return new Date(val.value);
-		} else {
-			return new Date(val.getTime());
-		}
-	},
+	pack,
+	unpack,
+	serialize,
+	deserialize,
 };

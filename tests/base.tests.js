@@ -1,229 +1,125 @@
 /* eslint-env mocha */
 
-const daypack = require('../src');
+const Daypack = require('../src');
 
-const AssertTest = require('./AssertTest');
+const chai = require('chai');
+const { assert } = chai;
+
 const PerformanceTest = require('./PerformanceTest');
 
-const obj1 = {
-	id: 'obj.1',
-};
+const Test1 = () => {
+	const input = {
+		id: 'order.123',
+		item: {
+			id: 'item.123',
+			name: 'some item',
+		},
+		for: {
+			id: 'user.123',
+			name: 'test user',
+		},
+	};
 
-const obj2 = {
-	id: 'obj.2',
-};
-
-obj1.ref = obj2;
-obj2.ref = obj1;
-
-
-const Test1 =	{
-	label: 'basic test',
-	call: daypack.pack,
-	input: [
-		{
+	const expected = {
+		'__daypack__': 'order.123',
+		'item.123': {
+			id: 'item.123',
+			name: 'some item',
+		},
+		'user.123': {
+			id: 'user.123',
+			name: 'test user',
+		},
+		'order.123': {
 			id: 'order.123',
-			item: {
-				id: 'item.123',
-				name: 'some item',
-			},
-			for: {
-				id: 'user.123',
-				name: 'test user',
-			},
+			item: 'item.123',
+			for: 'user.123',
 		},
-		{
-			id_key: 'id',
-			type_key: 'type',
-			serialize: true,
-		},
-	],
-	expected: {
-		__daypack: true,
-		result: 'order.123',
-		entities: {
-			'item.123': {
-				id: 'item.123',
-				name: 'some item',
-			},
-			'user.123': {
-				id: 'user.123',
-				name: 'test user',
-			},
-			'order.123': {
-				id: 'order.123',
-				item: 'item.123',
-				for: 'user.123',
-			},
-		},
-		options: {
-			id_key: 'id',
-			type_key: 'type',
-			serialize: true,
-		},
-	},
+	};
+
+	const output = Daypack.pack(input);
+
+	assert.deepEqual(output, expected);
 };
 
-const Test2 = {
-	label: 'large test 2',
-	call: daypack.pack,
-	input: require('./reddit.json'),
-	expected: daypack.pack(require('./reddit.json')),
+const Test2 = () => {
+	const input = require('./reddit.json');
+
+	const output = Daypack.pack(input);
+
+	// assert.deepEqual(output, expected);
 };
 
-const Test3 = {
-	label: 'date test 1',
-	call: daypack.pack,
-	input: new Date(1496906844700),
-	expected: daypack.pack(new Date(1496906844700)),
-};
+const Test3 = () => {
+	const date = new Date();
+	const input = date;
 
-const Test4 = {
-	label: 'date test 2',
-	call: (val) => daypack.unpack(daypack.pack(val)),
-	input: new Date(1496906844700),
-	expected: daypack.unpack(daypack.pack(new Date(1496906844700))),
-};
-
-const Test5 = {
-	label: 'regexp test 1',
-	call: (val) => daypack.pack(val),
-	input: /^a+$/gi,
-	expected: daypack.pack(/^a+$/gi),
-};
-
-const Test6 = {
-	label: 'regexp test 2',
-	call: (val) => daypack.unpack(daypack.pack(val)),
-	input: /^a+$/gi,
-	expected: daypack.unpack(daypack.pack(/^a+$/gi)),
-};
-
-const Test7 = {
-	label: 'circular pack test 1',
-	call: daypack.pack,
-	input: obj1,
-	expected: {
-		__daypack: true,
-		result: 'obj.1',
-		entities: {
-			'obj.1': {
-				id: 'obj.1',
-				ref: 'obj.2',
-			},
-			'obj.2': {
-				id: 'obj.2',
-				ref: 'obj.1',
-			},
+	const expected = {
+		'__daypack__': {
+			type: 'date',
+			value: date.getTime(),
 		},
-		options: {
-			id_key: 'id',
-			serialize: false,
-			type_key: 'class',
-		},
-	},
+	};
+
+	const output = Daypack.pack(input);
+
+	assert.deepEqual(output, expected);
 };
 
-const Test8 = {
-	label: 'circular unpack test 1',
-	call: daypack.unpack,
-	input: {
-		__daypack: true,
-		result: 'obj.1',
-		entities: {
-			'obj.1': {
-				id: 'obj.1',
-				ref: 'obj.2',
-			},
-			'obj.2': {
-				id: 'obj.2',
-				ref: 'obj.1',
-			},
+const Test4 = () => {
+	const re = /^a+$/gi;
+	const input = re;
+
+	const expected = {
+		'__daypack__': {
+			type: 'regexp',
+			source: '^a+$',
+			flags: 'gi',
+			lastIndex: 0,
 		},
-		options: {
-			id_key: 'id',
-			serialize: false,
-			type_key: 'class',
-		},
-	},
-	expected: obj1,
+	};
+
+	const output = Daypack.pack(input);
+
+	assert.deepEqual(output, expected);
 };
 
-const Test9 = {
-	label: 'serialize test',
-	call: (val) => daypack.unpack(daypack.pack(val, { serialize: true })),
-	input: {
+const Test5 = () => {
+	const obj1 = {
 		id: 'obj.1',
-		date: new Date(1000000),
-	},
-	expected: {
-		id: 'obj.1',
-		date: new Date(1000000),
-	},
-};
+	};
 
-const Test10 = {
-	label: 'double pack',
-	call: (val) => daypack.pack(daypack.pack(val)),
-	input: [
-		{
-			id: 'order.123',
-			item: {
-				id: 'item.123',
-				name: 'some item',
-			},
-			for: {
-				id: 'user.123',
-				name: 'test user',
-			},
+	const obj2 = {
+		id: 'obj.2',
+	};
+
+	obj1.ref = obj2;
+	obj2.ref = obj1;
+
+	const input = obj1;
+
+	const expected = {
+		'__daypack__': 'obj.1',
+		'obj.1': {
+			id: 'obj.1',
+			ref: 'obj.2',
 		},
-	],
-	expected: {
-		__daypack: true,
-		result: 'order.123',
-		entities: {
-			'item.123': {
-				id: 'item.123',
-				name: 'some item',
-			},
-			'user.123': {
-				id: 'user.123',
-				name: 'test user',
-			},
-			'order.123': {
-				id: 'order.123',
-				item: 'item.123',
-				for: 'user.123',
-			},
+		'obj.2': {
+			id: 'obj.2',
+			ref: 'obj.1',
 		},
-		options: {
-			id_key: 'id',
-			type_key: 'class',
-			serialize: false,
-		},
-	},
-};
+	};
+
+	const output = Daypack.pack(input);
+
+	assert.deepEqual(output, expected);
 
 
-const Test11 = {
-	label: 'double unpack',
-	call: (val) => daypack.unpack(daypack.unpack(val)),
-	input: {
-		__daypack: true,
-		result: 'obj.1',
-		entities: {
-			'obj.1': {
-				id: 'obj.1',
-				ref: 'obj.2',
-			},
-			'obj.2': {
-				id: 'obj.2',
-				ref: 'obj.1',
-			},
-		},
-	},
-	expected: obj1,
+	const input2 = Daypack.unpack(output);
+
+	assert.deepEqual(input2, input);
 };
+
 
 const TESTS = [
 	Test1,
@@ -231,17 +127,15 @@ const TESTS = [
 	Test3,
 	Test4,
 	Test5,
-	Test6,
-	Test7,
-	Test8,
-	Test9,
-	Test10,
-	Test11,
 ];
 
 
-describe('daypack tests', () => {
-	describe('assert tests', () => { TESTS.forEach(AssertTest); });
+describe('daypack', () => {
+	describe('assertion tests', () => {
+		TESTS.map((test, i) => it(`test ${i}`, test));
+	});
 
-	describe('performance tests', () => { TESTS.forEach(PerformanceTest); });
+	describe('performance tests', () => {
+		TESTS.map((test, i) => it(`test ${i}`, PerformanceTest(test)));
+	});
 });
