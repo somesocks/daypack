@@ -1,7 +1,7 @@
 /** @namespace daypack */
 require('polyfill2');
 
-const { pack, unpack } = require('./packers');
+const { packers, pack, unpack } = require('./packers');
 
 const Daypack = function (entities) {
 	const _this = Object.create(Daypack.prototype);
@@ -84,6 +84,11 @@ Daypack.prototype.fromJSON = function (json) {
 Daypack.ID_KEY = 'id';
 Daypack.TYPE_KEY = 'class';
 Daypack.HEAD = '__daypack__';
+
+Daypack.register = (type, packer) => {
+	packers[type] = packer;
+	return Daypack;
+};
 
 /**
 * A function that packs a JavaScript value.
