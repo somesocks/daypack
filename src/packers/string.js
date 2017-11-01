@@ -10,13 +10,7 @@ const unpack = (val, context) => {
 	return entity != null ? unpack(entity, context) : val;
 };
 
-const serialize = (val, context) => val;
-
-const deserialize = (val, context) => val;
-
 module.exports = {
 	pack,
 	unpack,
-	serialize,
-	deserialize,
 };

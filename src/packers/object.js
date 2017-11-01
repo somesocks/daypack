@@ -72,36 +72,7 @@ const unpack = (val, context) => {
 	}
 };
 
-const serialize = (val, context) => {
-	const { serialize } = context;
-	const res = {};
-
-	for (const key in val) {
-		if (val.hasOwnProperty(key)) {
-			res[key] = serialize(val[key], context);
-		}
-	}
-
-	return res;
-};
-
-const deserialize = (val, context) => {
-	const { deserialize } = context;
-	const res = {};
-
-	for (const key in val) {
-		if (val.hasOwnProperty(key)) {
-			res[key] = deserialize(val[key], context);
-		}
-	}
-
-	return res;
-};
-
-
 module.exports = {
 	pack,
 	unpack,
-	serialize,
-	deserialize,
 };

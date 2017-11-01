@@ -21,31 +21,7 @@ const unpack = (arr, context) => {
 	return temp;
 };
 
-const serialize = (arr, context) => {
-	const { serialize } = context;
-	const temp = [];
-
-	for (let i = 0; i < arr.length; i++) {
-		temp[i] = serialize(arr[i], context);
-	}
-
-	return temp;
-};
-
-const deserialize = (arr, context) => {
-	const { deserialize } = context;
-	const temp = [];
-
-	for (let i = 0; i < arr.length; i++) {
-		temp[i] = deserialize(arr[i], context);
-	}
-
-	return temp;
-};
-
 module.exports = {
 	pack,
 	unpack,
-	serialize,
-	deserialize,
 };

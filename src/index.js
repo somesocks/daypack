@@ -1,7 +1,7 @@
 /** @namespace daypack */
 require('polyfill2');
 
-const { pack, unpack, serialize, deserialize } = require('./packers');
+const { pack, unpack } = require('./packers');
 
 const Daypack = function (entities) {
 	const _this = Object.create(Daypack.prototype);
@@ -71,41 +71,14 @@ Daypack.prototype.fromObject = function (obj) {
 	return this;
 };
 
-Daypack.prototype.serialize = function () {
-	const { type_key, id_key } = this;
-
-	const context = {
-		type_key,
-		id_key,
-		serialize,
-	};
-
-	const obj = this.toObject();
-
-	return serialize(obj, context);
-};
-
-Daypack.prototype.deserialize = function (obj) {
-	const { type_key, id_key } = this;
-
-	const context = {
-		type_key,
-		id_key,
-		deserialize,
-	};
-
-	obj = deserialize(obj, context);
-	return this.fromObject(obj);
-};
-
 Daypack.prototype.toJSON = function () {
-	const obj = this.serialize;
+	const obj = this.toObject();
 	return JSON.stringify(obj);
 };
 
 Daypack.prototype.fromJSON = function (json) {
 	const obj = JSON.parse(json);
-	return this.deserialize(obj);
+	return this.fromObject(obj);
 };
 
 Daypack.ID_KEY = 'id';
@@ -120,7 +93,7 @@ Daypack.HEAD = '__daypack__';
 */
 Daypack.pack = (val) => Daypack()
 	.pack(val)
-	.serialize();
+	.toObject();
 
 /**
 * A function that unpacks a JavaScript value.
@@ -129,7 +102,7 @@ Daypack.pack = (val) => Daypack()
 * @memberof daypack
 */
 Daypack.unpack = (val) => Daypack()
-	.deserialize(val)
+	.fromObject(val)
 	.unpack();
 
 Daypack.toJSON = (val) => Daypack()

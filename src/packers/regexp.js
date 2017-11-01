@@ -1,11 +1,7 @@
 
 
-const pack = (val, context) => RegExp(val.source, val.flags);
-
-const unpack = (val, context) => RegExp(val.source, val.flags);
-
-const serialize = (val, context) => {
-	const { serialize, type_key } = context;
+const pack = (val, context) => {
+	const { type_key } = context;
 
 	const res = {
 		[type_key]: 'regexp',
@@ -17,9 +13,7 @@ const serialize = (val, context) => {
 	return res;
 };
 
-const deserialize = (val, context) => {
-	const { deserialize, type_key } = context;
-
+const unpack = (val, context) => {
 	const res = new RegExp(val.source, val.flags);
 	res.lastIndex = val.lastIndex;
 
@@ -29,6 +23,4 @@ const deserialize = (val, context) => {
 module.exports = {
 	pack,
 	unpack,
-	serialize,
-	deserialize,
 };

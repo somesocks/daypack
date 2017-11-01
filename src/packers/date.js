@@ -1,11 +1,7 @@
 
 
-const pack = (val, context) => new Date(val.getTime());
-
-const unpack = (val, context) => new Date(val.getTime());
-
-const serialize = (val, context) => {
-	const { serialize, type_key } = context;
+const pack = (val, context) => {
+	const { type_key } = context;
 
 	const res = {
 		[type_key]: 'date',
@@ -15,17 +11,12 @@ const serialize = (val, context) => {
 	return res;
 };
 
-const deserialize = (val, context) => {
-	const { deserialize, type_key } = context;
-
+const unpack = (val, context) => {
 	const res = new Date(val.value);
-
 	return res;
 };
 
 module.exports = {
 	pack,
 	unpack,
-	serialize,
-	deserialize,
 };

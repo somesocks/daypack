@@ -14,33 +14,30 @@ const packers = {
 	undefined: require('./undefined'),
 };
 
-const unpack = (val, context) => {
-	const _type = type(val, context);
-	const packer = packers[_type];
-	if (!packer) { throw new Error(`Daypack: no unpacker for type ${_type}`); }
-	return packer.unpack(val, context);
+const isObject = (val) =>
+	val !== null
+	&& (typeof val === 'function' || typeof val === 'object');
+
+
+const packer = (val, context) => {
+	if (isObject(val) && val.daypack) {
+		return val.daypack;
+	} else {
+		const _type = type(val, context);
+		const packer = packers[_type];
+
+		if (!packer) { throw new Error(`Daypack: no unpacker for type ${_type}`); }
+		return packer;
+	}
 };
 
-const pack = (val, context) => {
-	const _type = type(val, context);
-	const packer = packers[_type];
-	if (!packer) { throw new Error(`Daypack: no packer for type ${_type}`); }
-	return packer.pack(val, context);
-};
+const unpack = (val, context) => packer(val, context).unpack(val, context);
 
-const serialize = (val, context) => {
-	const _type = type(val, context);
-	const packer = packers[_type];
-	if (!packer) { throw new Error(`Daypack: no unpacker for type ${_type}`); }
-	return packer.serialize(val, context);
-};
+const pack = (val, context) => packer(val, context).pack(val, context);
 
-const deserialize = (val, context) => {
-	const _type = type(val, context);
-	const packer = packers[_type];
-	if (!packer) { throw new Error(`Daypack: no packer for type ${_type}`); }
-	return packer.deserialize(val, context);
-};
+const serialize = (val, context) => packer(val, context).serialize(val, context);
+
+const deserialize = (val, context) => packer(val, context).deserialize(val, context);
 
 module.exports = {
 	pack,
