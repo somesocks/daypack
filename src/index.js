@@ -56,18 +56,34 @@ Daypack.prototype.get = function (key) {
 	return entities[key];
 };
 
-Daypack.prototype.map = function (map, _this) {
+Daypack.prototype.map = function (map, options = {}) {
 	const { entities } = this;
+	const ignoreHead = options.ignoreHead != null ? options.ignoreHead : true;
 
-	const mapped = Object.map(entities, map, _this);
+	const _map = ignoreHead ?
+		function (value, key) {
+			return key === Daypack.HEAD ?
+				value : map.apply(this, arguments);
+		} :
+		map;
+
+	const mapped = Object.map(entities, map, this);
 
 	return Daypack(mapped);
 };
 
-Daypack.prototype.filter = function (filter, _this) {
-	const { entities } = this;
 
-	const filtered = Object.filter(entities, filter, _this);
+Daypack.prototype.filter = function (filter, options = {}) {
+	const { entities } = this;
+	const ignoreHead = options.ignoreHead != null ? options.ignoreHead : true;
+
+	const _filter = ignoreHead ?
+		function (value, key) {
+			return key === Daypack.HEAD || filter.apply(this, arguments);
+		} :
+		filter;
+
+	const filtered = Object.filter(entities, _filter, this);
 
 	return Daypack(filtered);
 };

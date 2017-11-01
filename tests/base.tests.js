@@ -150,7 +150,7 @@ const Test6 = () => {
 
 	const output = Daypack()
 		.pack(input)
-		.map((val, key) => { if (val.ref) { val.ref2 = val.ref; } return val; })
+		.map((val, key) => { val.ref2 = val.ref; return val; })
 		.toObject();
 
 	assert.deepEqual(output, expected);
