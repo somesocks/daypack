@@ -45,6 +45,17 @@ Daypack.prototype.unpack = function (val) {
 	return unpack(val, context);
 };
 
+Daypack.prototype.put = function (key, val) {
+	const { entities } = this;
+	entities[key] = val;
+	return this;
+};
+
+Daypack.prototype.get = function (key) {
+	const { entities } = this;
+	return entities[key];
+};
+
 Daypack.prototype.map = function (map, _this) {
 	const { entities } = this;
 
