@@ -1,6 +1,6 @@
 {
   "name": "daypack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A JavaScript library for flattening and reassembling object graphs.",
   "main": "dist/daypack.js",
   "scripts": {},
@@ -32,6 +32,7 @@
     "eslint-plugin-react": "^6.10.3",
     "js-object-pretty-print": "^0.3.0",
     "mocha": "^3.2.0",
+    "polyfill2": "^0.2.2",
     "webpack": "^1.14.0"
   }
 }

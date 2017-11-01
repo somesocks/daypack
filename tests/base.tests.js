@@ -120,6 +120,41 @@ const Test5 = () => {
 	assert.deepEqual(input2, input);
 };
 
+const Test6 = () => {
+	const obj1 = {
+		id: 'obj.1',
+	};
+
+	const obj2 = {
+		id: 'obj.2',
+	};
+
+	obj1.ref = obj2;
+	obj2.ref = obj1;
+
+	const input = obj1;
+
+	const expected = {
+		'__daypack__': 'obj.1',
+		'obj.1': {
+			id: 'obj.1',
+			ref: 'obj.2',
+			ref2: 'obj.2',
+		},
+		'obj.2': {
+			id: 'obj.2',
+			ref: 'obj.1',
+			ref2: 'obj.1',
+		},
+	};
+
+	const output = Daypack()
+		.pack(input)
+		.map((val, key) => { if (val.ref) { val.ref2 = val.ref; } return val; })
+		.toObject();
+
+	assert.deepEqual(output, expected);
+};
 
 const TESTS = [
 	Test1,
@@ -127,6 +162,7 @@ const TESTS = [
 	Test3,
 	Test4,
 	Test5,
+	Test6,
 ];
 
 
