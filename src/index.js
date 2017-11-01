@@ -109,7 +109,7 @@ Daypack.prototype.fromJSON = function (json) {
 };
 
 Daypack.ID_KEY = 'id';
-Daypack.TYPE_KEY = 'type';
+Daypack.TYPE_KEY = 'class';
 Daypack.HEAD = '__daypack__';
 
 /**

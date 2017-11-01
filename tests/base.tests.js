@@ -56,7 +56,7 @@ const Test3 = () => {
 
 	const expected = {
 		'__daypack__': {
-			type: 'date',
+			'class': 'date',
 			value: date.getTime(),
 		},
 	};
@@ -72,7 +72,7 @@ const Test4 = () => {
 
 	const expected = {
 		'__daypack__': {
-			type: 'regexp',
+			'class': 'regexp',
 			source: '^a+$',
 			flags: 'gi',
 			lastIndex: 0,
