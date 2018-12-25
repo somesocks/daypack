@@ -1,12 +1,21 @@
 module.exports = {
 	parser: "babel-eslint",
-	extends: "airbnb",
+	plugins: [
+		'eslint-plugin-babel',
+		'eslint-plugin-node',
+	],
+	extends: [
+		"airbnb",
+		'eslint-config-esnext',
+	],
 	rules: {
 		'import/no-extraneous-dependencies': ['off'],
 		'import/no-unresolved': ['off'],
+		'import/no-commonjs': ['off'],
 		'import/newline-after-import': ['off'],
 		'arrow-body-style': ['warn', 'as-needed'],
 		'arrow-parens': ['warn', 'always'],
+		'camelcase': ['off'],
 		'no-undef': ['error'],
 		'no-empty': ['warn'],
 		'no-unused-vars': ['warn'],
@@ -17,6 +26,9 @@ module.exports = {
 		'no-underscore-dangle': ['off'],
 		'no-useless-constructor': ['warn'],
 		'no-restricted-syntax': ['warn'],
+
+		'node/no-missing-require': 'error',
+
 		'quote-props': ['off'],
 		'quotes': ["warn", "single"],
 		'no-path-concat': ['warn'],

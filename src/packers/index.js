@@ -5,7 +5,6 @@ const packers = {
 	array: require('./array'),
 	boolean: require('./boolean'),
 	date: require('./date'),
-	daypack: require('./daypack'),
 	null: require('./null'),
 	number: require('./number'),
 	object: require('./object'),

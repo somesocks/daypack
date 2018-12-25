@@ -25,8 +25,8 @@ const type = function (thing, context) {
 			return 'array';
 		} else if (isString(thing[type_key])) {
 			return thing[type_key].toLowerCase();
-		} else if (thing.__proto__ != null && isString(thing.__proto__.name)) {
-			return thing.__proto__.name.toLowerCase();
+		} else if (thing.__proto__ != null && isString(thing.__proto__.name)) {  // eslint-disable-line no-proto
+			return thing.__proto__.name.toLowerCase(); // eslint-disable-line no-proto
 		} else if (thing.prototype != null && isString(thing.prototype.name)) {
 			return thing.prototype.name.toLowerCase();
 		} else if (thing.constructor != null && isString(thing.constructor.name)) {

@@ -2,11 +2,20 @@
 const path = require('path');
 const Webpack = require('webpack');
 
-const SRC_DIR = path.normalize(__dirname + '/src');
-const DIST_DIR = path.normalize(__dirname + '/dist');
+const SRC_DIR = path.normalize(__dirname + '/../src');
+const DIST_DIR = path.normalize(__dirname + '/../dist');
 
 const plugins = [
-	new Webpack.optimize.UglifyJsPlugin({ mangle: true, compress: {}, output: { comments: false } }),
+	new Webpack.optimize.UglifyJsPlugin(
+		{
+			mangle: true,
+			compress: {},
+			output: {
+				beautify: true,
+				comments: false,
+			},
+		}
+	),
 ];
 
 const CONFIG = {

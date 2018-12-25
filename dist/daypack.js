@@ -1,1 +1,329 @@
-!function(t,e){if("object"==typeof exports&&"object"==typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var n=e();for(var r in n)("object"==typeof exports?exports:t)[r]=n[r]}}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){t.exports=n(1)},function(t,e,n){"use strict";n(2);var r=n(3),o=r.packers,i=r.pack,c=r.unpack,u=function t(e){var n=Object.create(t.prototype);return n.entities=e||{},n.type_key=t.TYPE_KEY,n.id_key=t.ID_KEY,n.head=t.HEAD,n};u.prototype.pack=function(t){var e=this.type_key,n=this.id_key,r=this.head,o=this.entities,c={type_key:e,id_key:n,unpacked:{},packed:o,pack:i},u=i(t,c);return o[r]=u,this},u.prototype.unpack=function(t){var e=this.type_key,n=this.id_key,r=this.head,o=this.entities;t=t||r;var i={type_key:e,id_key:n,unpacked:{},packed:o,unpack:c};return c(t,i)},u.prototype.put=function(t,e){var n=this.entities;return n[t]=e,this},u.prototype.get=function(t){var e=this.entities;return e[t]},u.prototype.map=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=this.entities,r=(null==e.ignoreHead||e.ignoreHead,Object.map(n,t,this));return u(r)},u.prototype.filter=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=this.entities,r=null==e.ignoreHead||e.ignoreHead,o=r?function(e,n){return n===u.HEAD||t.apply(this,arguments)}:t,i=Object.filter(n,o,this);return u(i)},u.prototype.toObject=function(){return this.entities},u.prototype.fromObject=function(t){return this.entities=t,this},u.prototype.toJSON=function(){var t=this.toObject();return JSON.stringify(t)},u.prototype.fromJSON=function(t){var e=JSON.parse(t);return this.fromObject(e)},u.ID_KEY="id",u.TYPE_KEY="class",u.HEAD="__daypack__",u.register=function(t,e){return o[t]=e,u},u.pack=function(t){return u().pack(t).toObject()},u.unpack=function(t){return u().fromObject(t).unpack()},u.toJSON=function(t){return u().pack(t).toJSON()},u.fromJSON=function(t){return u().fromJSON(t)},t.exports=u},function(t,e,n){!function(e,n){t.exports=n()}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){t.exports=n(1)},function(t,e,n){"use strict";function r(t){if(Array.isArray(t)){for(var e=0,n=Array(t.length);e<t.length;e++)n[e]=t[e];return n}return Array.from(t)}var o=[].concat(r(n(2)),r(n(3)),r(n(8)));t.exports=function(t){for(var e=0;e<o.length;e++)o[e](t)}},function(t,e){"use strict";t.exports=[]},function(t,e,n){"use strict";t.exports=[n(4),n(5),n(6),n(7)]},function(t,e){"use strict";function n(){var t={};for(var e in this)Object.prototype.hasOwnProperty.call(this,e)&&(t[e]=this[e]);return t}function r(t){Object.copy&&!t||(Object.copy=function(){return n.call.apply(n,arguments)})}t.exports=r,r()},function(t,e){"use strict";function n(t,e){var n={};for(var r in this)if(Object.prototype.hasOwnProperty.call(this,r)){var o=this[r];t.call(e,o,r,this)&&(n[r]=this[r])}return n}function r(t){Object.filter&&!t||(Object.filter=function(){return n.call.apply(n,arguments)})}t.exports=r,r()},function(t,e){"use strict";function n(t,e){for(var n in this)Object.prototype.hasOwnProperty.call(this,n)&&t.call(e,this[n],n,this)}function r(t){Object.forEach&&!t||(Object.forEach=function(){return n.call.apply(n,arguments)})}t.exports=r,r()},function(t,e){"use strict";function n(t,e){var n={};for(var r in this)if(Object.prototype.hasOwnProperty.call(this,r)){var o=this[r];n[r]=t.call(e,o,r,this)}return n}function r(t){Object.map&&!t||(Object.map=function(){return n.call.apply(n,arguments)})}t.exports=r,r()},function(t,e,n){"use strict";t.exports=[n(9),n(10),n(11),n(12),n(13)]},function(t,e){"use strict";function n(t){var e=this,n=function(n){t.has(n)&&e.delete(n)};return this.forEach(n),this}function r(t){!Set||Set.prototype.complement&&!t||Object.defineProperty(Set.prototype,"complement",{value:n})}t.exports=r,r()},function(t,e){"use strict";function n(t,e){var n=new Set,r=function(r){t.call(e,r)&&n.add(r)};return this.forEach(r),n}function r(t){!Set||Set.filter&&!t||(Set.filter=function(){return n.call.apply(n,arguments)}),!Set||Set.prototype.filter&&!t||Object.defineProperty(Set.prototype,"filter",{value:n})}t.exports=r,r()},function(t,e){"use strict";function n(t){var e=this,n=function(n){t.has(n)||e.delete(n)};return this.forEach(n),this}function r(t){!Set||Set.prototype.intersection&&!t||Object.defineProperty(Set.prototype,"intersection",{value:n})}t.exports=r,r()},function(t,e){"use strict";function n(t,e){var n=new Set,r=function(r){n.add(t.call(e,r))};return this.forEach(r),n}function r(t){!Set||Set.map&&!t||(Set.filter=function(){return n.call.apply(n,arguments)}),!Set||Set.prototype.map&&!t||Object.defineProperty(Set.prototype,"map",{value:n})}t.exports=r,r()},function(t,e){"use strict";function n(t){var e=this,n=function(t){return e.add(t)};return t.forEach(n),this}function r(t){!Set||Set.prototype.union&&!t||Object.defineProperty(Set.prototype,"union",{value:n})}t.exports=r,r()}])})},function(t,e,n){"use strict";var r=("function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},n(4)),o={array:n(5),boolean:n(6),date:n(7),daypack:n(8),null:n(9),number:n(10),object:n(11),regexp:n(12),string:n(13),undefined:n(14)},i=function t(e,n){var i=r(e,n),t=o[i];if(!t)throw new Error("Daypack: no unpacker for type "+i);return t},c=function(t,e){return i(t,e).unpack(t,e)},u=function(t,e){return i(t,e).pack(t,e)};t.exports={packers:o,pack:u,unpack:c}},function(t,e){"use strict";var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},r=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)},o=function(t){return"string"==typeof t||t instanceof String},i=function(t,e){var i=e.type_key,c="undefined"==typeof t?"undefined":n(t);switch(c){default:case"undefined":case"boolean":case"number":case"string":case"symbol":case"function":return c;case"object":return null===t?"null":r(t)?"array":o(t[i])?t[i].toLowerCase():null!=t.__proto__&&o(t.__proto__.name)?t.__proto__.name.toLowerCase():null!=t.prototype&&o(t.prototype.name)?t.prototype.name.toLowerCase():null!=t.constructor&&o(t.constructor.name)?t.constructor.name.toLowerCase():"object"}};t.exports=i},function(t,e){"use strict";var n=function t(e,n){for(var t=n.pack,r=[],o=0;o<e.length;o++)r[o]=t(e[o],n);return r},r=function t(e,n){for(var t=n.unpack,r=[],o=0;o<e.length;o++)r[o]=t(e[o],n);return r};t.exports={pack:n,unpack:r}},function(t,e){"use strict";var n=function(t,e){return t},r=function(t,e){return t};t.exports={pack:n,unpack:r}},function(t,e){"use strict";function n(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var r=function(t,e){var r,o=e.type_key,i=(r={},n(r,o,"date"),n(r,"value",t.getTime()),r);return i},o=function(t,e){var n=new Date(t.value);return n};t.exports={pack:r,unpack:o}},function(t,e){"use strict";var n=function(t,e){var n=(e.unpacked,e.packed),r=t.head;return Object.assign(n,t.entities),t[r]},r=function(t,e){return t};t.exports={pack:n,unpack:r}},function(t,e){"use strict";var n=function(t,e){return t},r=function(t,e){return t};t.exports={pack:n,unpack:r}},function(t,e){"use strict";var n=function(t,e){return t},r=function(t,e){return t};t.exports={pack:n,unpack:r}},function(t,e){"use strict";var n=function(t){return"string"==typeof t||t instanceof String},r=function t(e,r){var t=r.pack,o=r.packed,i=(r.unpacked,r.id_key),c=e[i];if(n(c)){var u=o[c];if(u)return c;var a={};a[i]=c,o[c]=a;for(var p in e)p!==i&&e.hasOwnProperty(p)&&(a[p]=t(e[p],r));return c}var s={};s[i]=c;for(var f in e)f!==i&&e.hasOwnProperty(f)&&(s[f]=t(e[f],r));return s},o=function t(e,r){var t=r.unpack,o=(r.packed,r.unpacked),i=r.id_key,c=e[i];if(n(c)){var u=o[c];if(u)return u;var a={};a[i]=c,o[c]=a;for(var p in e)p!==i&&e.hasOwnProperty(p)&&(a[p]=t(e[p],r));return a}var s={};for(var f in e)f!==i&&e.hasOwnProperty(f)&&(s[f]=t(e[f],r));return s};t.exports={pack:r,unpack:o}},function(t,e){"use strict";function n(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var r=function(t,e){var r,o=e.type_key,i=(r={},n(r,o,"regexp"),n(r,"source",t.source),n(r,"flags",t.flags),n(r,"lastIndex",t.lastIndex),r);return i},o=function(t,e){var n=new RegExp(t.source,t.flags);return n.lastIndex=t.lastIndex,n};t.exports={pack:r,unpack:o}},function(t,e){"use strict";var n=function(t,e){return t},r=function t(e,n){var t=n.unpack,r=n.packed,o=(n.unpacked,r[e]);return null!=o?t(o,n):e};t.exports={pack:n,unpack:r}},function(t,e){"use strict";var n=function(t,e){return t},r=function(t,e){return t};t.exports={pack:n,unpack:r}}])});
+!function(t, e) {
+    if ("object" == typeof exports && "object" == typeof module) module.exports = e(); else if ("function" == typeof define && define.amd) define([], e); else {
+        var n = e();
+        for (var r in n) ("object" == typeof exports ? exports : t)[r] = n[r];
+    }
+}(this, function() {
+    return function(t) {
+        function e(r) {
+            if (n[r]) return n[r].exports;
+            var o = n[r] = {
+                exports: {},
+                id: r,
+                loaded: !1
+            };
+            return t[r].call(o.exports, o, o.exports, e), o.loaded = !0, o.exports;
+        }
+        var n = {};
+        return e.m = t, e.c = n, e.p = "", e(0);
+    }([ function(t, e, n) {
+        t.exports = n(1);
+    }, function(t, e, n) {
+        "use strict";
+        var r = n(2);
+        r.default = r, t.exports = r;
+    }, function(t, e, n) {
+        "use strict";
+        var r = n(3), o = r.packers, a = r.pack, i = r.unpack, u = function t() {
+            var e = this instanceof t ? this : Object.create(t.prototype);
+            return e._head = void 0, e._heap = {}, e._type_key = t.TYPE_KEY, e._id_key = t.ID_KEY, 
+            e;
+        };
+        u.prototype.withHeap = function(t) {
+            return this._heap = t, this;
+        }, u.prototype.withHead = function(t) {
+            return this._head = t, this;
+        }, u.prototype.pack = function(t) {
+            var e = {
+                type_key: this._type_key,
+                id_key: this._id_key,
+                unpacked: {},
+                packed: this._heap,
+                pack: a
+            };
+            return this._head = a(t, e), this;
+        }, u.prototype.unpack = function(t) {
+            t = arguments.length > 0 ? t : this._head;
+            var e = {
+                type_key: this._type_key,
+                id_key: this._id_key,
+                unpacked: {},
+                packed: this._heap,
+                unpack: i
+            };
+            return i(t, e);
+        }, u.prototype.each = function(t) {
+            var e = (this._heap, {
+                type_key: this._type_key,
+                id_key: this._id_key,
+                unpacked: void 0,
+                packed: void 0,
+                unpack: i
+            });
+            for (var n in this._heap) if (this._heap.hasOwnProperty(n)) {
+                e.packed = {}, e.unpacked = {};
+                var r = i(this._heap[n], e);
+                t(r, n);
+            }
+            return this;
+        }, u.prototype.filter = function(t) {
+            var e = (this._heap, u()), n = {
+                type_key: this._type_key,
+                id_key: this._id_key,
+                unpacked: void 0,
+                packed: void 0,
+                unpack: i
+            };
+            for (var r in this._heap) if (this._heap.hasOwnProperty(r)) {
+                n.packed = {}, n.unpacked = {};
+                var o = i(this._heap[r], n);
+                t(o, r) && e.pack(o);
+            }
+            return e._head = this._head, e;
+        }, u.prototype.map = function(t) {
+            var e = (this._heap, u()), n = {
+                type_key: this._type_key,
+                id_key: this._id_key,
+                unpacked: void 0,
+                packed: void 0,
+                unpack: i
+            };
+            for (var r in this._heap) if (this._heap.hasOwnProperty(r)) {
+                n.packed = {}, n.unpacked = {};
+                var o = i(this._heap[r], n);
+                o = t(o, r), e.pack(o);
+            }
+            return e._head = this._head, e;
+        }, u.prototype.toObject = function() {
+            return {
+                _daypack: "v2",
+                head: this._head,
+                heap: this._heap
+            };
+        }, u.prototype.fromObject = function(t) {
+            if ("v2" === t._daypack && "head" in t && "heap" in t) return this._head = t.head, 
+            this._heap = t.heap, this;
+            if (u.V1_HEAD in t) return this._head = t[u.V1_HEAD], delete t[u.V1_HEAD], this._heap = t, 
+            this;
+            throw new Error("Daypack#fromObject: unrecognized object format");
+        }, u.prototype.toJSON = function() {
+            return JSON.stringify(this.toObject(), null, "\t");
+        }, u.prototype.fromJSON = function(t) {
+            return this.fromObject(JSON.parse(t));
+        }, u.ID_KEY = "id", u.TYPE_KEY = "class", u.V1_HEAD = "__daypack__", u.pack = function(t) {
+            return u().pack(t).toObject();
+        }, u.unpack = function(t) {
+            return u().fromObject(t).unpack();
+        }, u.clone = function(t) {
+            return u().pack(t).unpack();
+        }, u.register = function(t, e) {
+            return o[t] = e, u;
+        }, u.default = u, t.exports = u;
+    }, function(t, e, n) {
+        "use strict";
+        var r = ("function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
+            return typeof t;
+        } : function(t) {
+            return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
+        }, n(4)), o = {
+            array: n(5),
+            boolean: n(6),
+            date: n(7),
+            null: n(8),
+            number: n(9),
+            object: n(10),
+            regexp: n(11),
+            string: n(12),
+            undefined: n(13)
+        }, a = function t(e, n) {
+            var a = r(e, n), t = o[a];
+            if (!t) throw new Error("Daypack: no unpacker for type " + a);
+            return t;
+        }, i = function(t, e) {
+            return a(t, e).unpack(t, e);
+        }, u = function(t, e) {
+            return a(t, e).pack(t, e);
+        };
+        t.exports = {
+            packers: o,
+            pack: u,
+            unpack: i
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
+            return typeof t;
+        } : function(t) {
+            return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
+        }, r = Array.isArray || function(t) {
+            return "[object Array]" === Object.prototype.toString.call(t);
+        }, o = function(t) {
+            return "string" == typeof t || t instanceof String;
+        }, a = function(t, e) {
+            var a = e.type_key, i = "undefined" == typeof t ? "undefined" : n(t);
+            switch (i) {
+              default:
+              case "undefined":
+              case "boolean":
+              case "number":
+              case "string":
+              case "symbol":
+              case "function":
+                return i;
+
+              case "object":
+                return null === t ? "null" : r(t) ? "array" : o(t[a]) ? t[a].toLowerCase() : null != t.__proto__ && o(t.__proto__.name) ? t.__proto__.name.toLowerCase() : null != t.prototype && o(t.prototype.name) ? t.prototype.name.toLowerCase() : null != t.constructor && o(t.constructor.name) ? t.constructor.name.toLowerCase() : "object";
+            }
+        };
+        t.exports = a;
+    }, function(t, e) {
+        "use strict";
+        var n = function t(e, n) {
+            for (var t = n.pack, r = [], o = 0; o < e.length; o++) r[o] = t(e[o], n);
+            return r;
+        }, r = function t(e, n) {
+            for (var t = n.unpack, r = [], o = 0; o < e.length; o++) r[o] = t(e[o], n);
+            return r;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t, e) {
+            return t;
+        }, r = function(t, e) {
+            return t;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    }, function(t, e) {
+        "use strict";
+        function n(t, e, n) {
+            return e in t ? Object.defineProperty(t, e, {
+                value: n,
+                enumerable: !0,
+                configurable: !0,
+                writable: !0
+            }) : t[e] = n, t;
+        }
+        var r = function(t, e) {
+            var r, o = e.type_key, a = (r = {}, n(r, o, "date"), n(r, "value", t.getTime()), 
+            r);
+            return a;
+        }, o = function(t, e) {
+            var n = new Date(t.value);
+            return n;
+        };
+        t.exports = {
+            pack: r,
+            unpack: o
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t, e) {
+            return t;
+        }, r = function(t, e) {
+            return t;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t, e) {
+            return t;
+        }, r = function(t, e) {
+            return t;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t) {
+            return "string" == typeof t || t instanceof String;
+        }, r = function t(e, r) {
+            var t = r.pack, o = r.packed, a = (r.unpacked, r.id_key), i = e[a];
+            if (n(i)) {
+                var u = o[i];
+                if (u) return i;
+                var c = {};
+                c[a] = i, o[i] = c;
+                for (var p in e) p !== a && e.hasOwnProperty(p) && (c[p] = t(e[p], r));
+                return i;
+            }
+            var s = {};
+            s[a] = i;
+            for (var f in e) f !== a && e.hasOwnProperty(f) && (s[f] = t(e[f], r));
+            return s;
+        }, o = function t(e, r) {
+            var t = r.unpack, o = (r.packed, r.unpacked), a = r.id_key, i = e[a];
+            if (n(i)) {
+                var u = o[i];
+                if (u) return u;
+                var c = {};
+                c[a] = i, o[i] = c;
+                for (var p in e) p !== a && e.hasOwnProperty(p) && (c[p] = t(e[p], r));
+                return c;
+            }
+            var s = {};
+            for (var f in e) f !== a && e.hasOwnProperty(f) && (s[f] = t(e[f], r));
+            return s;
+        };
+        t.exports = {
+            pack: r,
+            unpack: o
+        };
+    }, function(t, e) {
+        "use strict";
+        function n(t, e, n) {
+            return e in t ? Object.defineProperty(t, e, {
+                value: n,
+                enumerable: !0,
+                configurable: !0,
+                writable: !0
+            }) : t[e] = n, t;
+        }
+        var r = function(t, e) {
+            var r, o = e.type_key, a = (r = {}, n(r, o, "regexp"), n(r, "source", t.source), 
+            n(r, "flags", t.flags), n(r, "lastIndex", t.lastIndex), r);
+            return a;
+        }, o = function(t, e) {
+            var n = new RegExp(t.source, t.flags);
+            return n.lastIndex = t.lastIndex, n;
+        };
+        t.exports = {
+            pack: r,
+            unpack: o
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t, e) {
+            return t;
+        }, r = function t(e, n) {
+            var t = n.unpack, r = n.packed, o = (n.unpacked, r[e]);
+            return null != o ? t(o, n) : e;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    }, function(t, e) {
+        "use strict";
+        var n = function(t, e) {
+            return t;
+        }, r = function(t, e) {
+            return t;
+        };
+        t.exports = {
+            pack: n,
+            unpack: r
+        };
+    } ]);
+});
