@@ -21,18 +21,31 @@ default: help
 help:
 	@grep "^##.*" ./Makefile
 
+
+
+##		make setup - setup for local development
+##
+setup:
+	$(NPM) install
+
+
+build-src:
+	$(NPM) run cmd-build-src
+
+build-pack: build-src
+	cp ./.npmignore ./dist
+	cp ./package.json ./dist
+	cp ./LICENSE ./dist
+	cp ./README.md ./dist
+
+build-docs:
+	$(NPM) run cmd-build-docs
+	cp ./README.md ./dist
+
+
 ##		make build - build the package
 ##
-build:
-	$(NPM) run cmd-build
-
-##		make analyze-build - analyze the built package
-##
-analyze-build:
-	$(NPM) run cmd-analyze-build
-	#
-	# NODE_MODULES=. webpack --config=./webpack.js --profile --json > stats.json
-	# webpack-bundle-analyzer stats.json
+build: build-src build-pack build-docs
 
 ##		make pack - build a tarball of the package
 ##
@@ -50,6 +63,16 @@ test: test-cases
 ##
 build-docs:
 		(export NODE_PATH=./; find ./src -name '*.js' |sort -t'/' -k2.2 -k2.1 | xargs jsdoc2md --template README.hbs --files ) > README.md
+
+##		make package-check - list the files that will be present in the package
+##
+package-check:
+	cd ./dist && $(NPM) publish --dry-run
+
+##		make package-publish - publish the current dist dir
+##
+package-publish:
+	cd ./dist && $(NPM) publish
 
 ##
 ##
