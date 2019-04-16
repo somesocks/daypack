@@ -70,6 +70,27 @@ Daypack.prototype.pack = function pack(val) {
 };
 
 /**
+* `packHeadless` packs a value into the heap, but does not update the head
+* @name packHeadless
+* @param val
+* @returns this
+* @memberof Daypack#
+*/
+Daypack.prototype.packHeadless = function packHeadless(val) {
+	const context = {
+		type_key: this._type_key,
+		id_key: this._id_key,
+		unpacked: {},
+		packed: this._heap,
+		pack: _pack,
+	};
+
+	_pack(val, context);
+
+	return this;
+};
+
+/**
 * `unpack` unpacks the head, or accepts an optional "head" to unpack
 * @name unpack
 * @param val - an optional "head" to use as a base point for unpacking
