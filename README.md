@@ -30,7 +30,7 @@ This library is similar to normalizr, but with a few differences:
     * [.withHeap](#Daypack+withHeap) ⇒
     * [.withHead](#Daypack+withHead) ⇒
     * [.pack](#Daypack+pack) ⇒
-    * [.packHeadless](#Daypack+packHeadless) ⇒
+    * [.packHeap](#Daypack+packHeap) ⇒
     * [.unpack](#Daypack+unpack) ⇒
     * [.each](#Daypack+each) ⇒
     * [.filter](#Daypack+filter) ⇒
@@ -88,10 +88,10 @@ This library is similar to normalizr, but with a few differences:
 
 * * *
 
-<a name="Daypack+packHeadless"></a>
+<a name="Daypack+packHeap"></a>
 
-### daypack.packHeadless ⇒
-`packHeadless` packs a value into the heap, but does not update the head
+### daypack.packHeap ⇒
+`packHeap` packs a value into the heap, but does not update the head
 
 **Kind**: instance property of [<code>Daypack</code>](#Daypack)  
 **Returns**: this  
@@ -252,7 +252,7 @@ A function that packs a JavaScript value.
     * [.withHeap](#Daypack+withHeap) ⇒
     * [.withHead](#Daypack+withHead) ⇒
     * [.pack](#Daypack+pack) ⇒
-    * [.packHeadless](#Daypack+packHeadless) ⇒
+    * [.packHeap](#Daypack+packHeap) ⇒
     * [.unpack](#Daypack+unpack) ⇒
     * [.each](#Daypack+each) ⇒
     * [.filter](#Daypack+filter) ⇒
@@ -310,10 +310,10 @@ A function that packs a JavaScript value.
 
 * * *
 
-<a name="Daypack+packHeadless"></a>
+<a name="Daypack+packHeap"></a>
 
-### daypack.packHeadless ⇒
-`packHeadless` packs a value into the heap, but does not update the head
+### daypack.packHeap ⇒
+`packHeap` packs a value into the heap, but does not update the head
 
 **Kind**: instance property of [<code>Daypack</code>](#Daypack)  
 **Returns**: this  

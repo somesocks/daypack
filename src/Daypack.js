@@ -70,13 +70,13 @@ Daypack.prototype.pack = function pack(val) {
 };
 
 /**
-* `packHeadless` packs a value into the heap, but does not update the head
-* @name packHeadless
+* `packHeap` packs a value into the heap, but does not update the head
+* @name packHeap
 * @param val
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.packHeadless = function packHeadless(val) {
+Daypack.prototype.packHeap = function packHeap(val, key) {
 	const context = {
 		type_key: this._type_key,
 		id_key: this._id_key,
@@ -85,10 +85,14 @@ Daypack.prototype.packHeadless = function packHeadless(val) {
 		pack: _pack,
 	};
 
-	_pack(val, context);
+	const _head = _pack(val, context);
+
+	if (key != null) { this._heap[key] = _head; }
 
 	return this;
 };
+
+
 
 /**
 * `unpack` unpacks the head, or accepts an optional "head" to unpack
