@@ -24,16 +24,37 @@ const Daypack = function () {
 	return self;
 };
 
+/**
+* `withHeap` allows you to manually set the heap for a pack
+* @name withHeap
+* @param heap
+* @returns this
+* @memberof Daypack#
+*/
 Daypack.prototype.withHeap = function withHeap(heap) {
 	this._heap = heap;
 	return this;
 };
 
+/**
+* `withHead` allows you to manually set the head for a pack
+* @name withHead
+* @param head
+* @returns this
+* @memberof Daypack#
+*/
 Daypack.prototype.withHead = function withHead(head) {
 	this._head = head;
 	return this;
 };
 
+/**
+* `pack` packs a value into the heap, and updates the head
+* @name pack
+* @param val
+* @returns this
+* @memberof Daypack#
+*/
 Daypack.prototype.pack = function pack(val) {
 	const context = {
 		type_key: this._type_key,
@@ -48,6 +69,13 @@ Daypack.prototype.pack = function pack(val) {
 	return this;
 };
 
+/**
+* `unpack` unpacks the head, or accepts an optional "head" to unpack
+* @name unpack
+* @param val - an optional "head" to use as a base point for unpacking
+* @returns the unpacked head
+* @memberof Daypack#
+*/
 Daypack.prototype.unpack = function unpack(val) {
 	val = arguments.length > 0 ? val : this._head;
 
@@ -62,6 +90,13 @@ Daypack.prototype.unpack = function unpack(val) {
 	return _unpack(val, context);
 };
 
+/**
+* `each` unpacks everything in the heap in isolation, and calls the 'each' function on it
+* @name each
+* @param func - an each function to call
+* @returns this
+* @memberof Daypack#
+*/
 Daypack.prototype.each = function each(func) {
 	const packed = this._heap;
 
@@ -85,6 +120,14 @@ Daypack.prototype.each = function each(func) {
 	return this;
 };
 
+/**
+* `filter` unpacks everything in the heap in isolation, and calls the 'filter' function on it,
+* to build a new pack
+* @name filter
+* @param func - a filter function to call
+* @returns a new DayPack instance with only the filtered entities in the heap
+* @memberof Daypack#
+*/
 Daypack.prototype.filter = function filter(func) {
 	const packed = this._heap;
 
@@ -114,6 +157,14 @@ Daypack.prototype.filter = function filter(func) {
 	return filtered;
 };
 
+/**
+* `map` unpacks everything in the heap in isolation, and calls the 'map' function on it,
+* to build a new pack
+* @name map
+* @param func - a map function to call
+* @returns a new DayPack instance with the mapped entities in the heap
+* @memberof Daypack#
+*/
 Daypack.prototype.map = function filter(func) {
 	const packed = this._heap;
 
@@ -142,6 +193,12 @@ Daypack.prototype.map = function filter(func) {
 	return mapped;
 };
 
+/**
+* `toObject` converts the pack into a serializable object
+* @name toObject
+* @returns a serializable version of the pack
+* @memberof Daypack#
+*/
 Daypack.prototype.toObject = function toObject() {
 	if (Daypack.V1_OUTPUT) {
 		const pack = {};
@@ -166,6 +223,13 @@ Daypack.prototype.toObject = function toObject() {
 	}
 };
 
+/**
+* `fromObject` de-serializes a serialized version into a DayPack instance
+* @name fromObject
+* @param obj - the object to unpack
+* @returns this
+* @memberof Daypack#
+*/
 Daypack.prototype.fromObject = function fromObject(obj) {
 	if (
 		obj._daypack === 'v2' &&
@@ -187,10 +251,23 @@ Daypack.prototype.fromObject = function fromObject(obj) {
 	}
 };
 
+/**
+* `toJSON` converts the pack into a JSON object
+* @name toJSON
+* @returns a JSON string
+* @memberof Daypack#
+*/
 Daypack.prototype.toJSON = function toJSON() {
 	return JSON.stringify(this.toObject(), null, '\t');
 };
 
+/**
+* `fromJSON` de-serialized a JSON string into this pack
+* @name fromJSON
+* @param json - the json to unpack
+* @returns a JSON string
+* @memberof Daypack#
+*/
 Daypack.prototype.fromJSON = function fromJSON(json) {
 	return this.fromObject(JSON.parse(json));
 };
@@ -201,6 +278,14 @@ Daypack.TYPE_KEY = 'class';
 
 Daypack.V1_OUTPUT = true;
 Daypack.V1_HEAD = '__daypack__';
+
+/**
+* `fromJSON` de-serialized a JSON string into this pack
+* @name fromJSON
+* @param json - the json to unpack
+* @returns a JSON string
+* @memberof Daypack#
+*/
 
 Daypack.pack = (val) => Daypack()
 	.pack(val)

@@ -3,12 +3,6 @@
   "version": "2.0.0",
   "description": "A JavaScript library for flattening and reassembling object graphs.",
   "main": "index.js",
-  "scripts": {
-    "cmd-build-docs": "(find ./src -name *.js | sort -t/ -k2.2 -k2.1 | xargs jsdoc2md --separators --param-list-format list --property-list-format list --member-index-format list --template README.hbs --files) > README.md",
-    "cmd-build-src": "rsync --update --recursive --delete ./src/ ./dist",
-    "cmd-test-cases": "find ./dist -name '*mocha.tests.js' | xargs mocha --timeout 10000",
-    "cmd-test-eslint": "find ./dist -name '*.js' | xargs eslint --quiet"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/somesocks/daypack.git"
@@ -26,20 +20,21 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.14.0",
-		"babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "chai": "^4.0.2",
-		"eslint": "^5.7.0",
+    "eslint": "^5.7.0",
     "eslint-config-airbnb": "^14.1.0",
-		"eslint-config-esnext": "^4.0.0",
-		"eslint-import-resolver-node": "^0.3.2",
-		"eslint-plugin-babel": "^5.2.1",
-		"eslint-plugin-import": "^2.14.0",
-		"eslint-plugin-node": "^7.0.1",
+    "eslint-config-esnext": "^4.0.0",
+    "eslint-import-resolver-node": "^0.3.2",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-react": "^6.10.3",
     "js-object-pretty-print": "^0.3.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^3.2.0"
   }
 }

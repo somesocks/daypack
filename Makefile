@@ -1,5 +1,5 @@
 
-NPM = pnpm
+TASKS=./tasks
 
 .PHONY: help build test
 
@@ -28,51 +28,39 @@ help:
 setup:
 	$(NPM) install
 
+##	make build - build the package
+build: build-src build-docs
+	sh $(TASKS)/build-meta.sh
 
 build-src:
-	$(NPM) run cmd-build-src
-
-build-pack: build-src
-	cp ./.npmignore ./dist
-	cp ./package.json ./dist
-	cp ./LICENSE ./dist
-	cp ./README.md ./dist
+	sh $(TASKS)/build-src.sh
 
 build-docs:
-	$(NPM) run cmd-build-docs
-	cp ./README.md ./dist
+	sh $(TASKS)/build-docs.sh
 
 
-##		make build - build the package
-##
-build: build-src build-pack build-docs
-
-##		make pack - build a tarball of the package
-##
-pack:
-	$(NPM) pack
-
-test-cases:
-	$(NPM) run cmd-test-cases -- $(MOCHA)
 
 ##		make test - run tests
 ##
-test: test-cases
+test: test-mocha test-eslint
 
-##		make build-docs - build the readme from the jsdocs
-##
-build-docs:
-		(export NODE_PATH=./; find ./src -name '*.js' |sort -t'/' -k2.2 -k2.1 | xargs jsdoc2md --template README.hbs --files ) > README.md
+test-mocha:
+	sh $(TASKS)/test-mocha.sh
+
+test-eslint:
+	sh $(TASKS)/test-eslint.sh
+
+
 
 ##		make package-check - list the files that will be present in the package
 ##
 package-check:
-	cd ./dist && $(NPM) publish --dry-run
+	sh $(TASKS)/package-check.sh
 
 ##		make package-publish - publish the current dist dir
 ##
 package-publish:
-	cd ./dist && $(NPM) publish
+	sh $(TASKS)/package-publish.sh
 
 ##
 ##
