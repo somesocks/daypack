@@ -60,11 +60,13 @@ Daypack.prototype.pack = function pack(val) {
 		type_key: this._type_key,
 		id_key: this._id_key,
 		unpacked: {},
-		packed: this._heap,
+		packed: {},
 		pack: _pack,
 	};
 
 	this._head = _pack(val, context);
+
+	Object.assign(this._heap, context.packed);
 
 	return this;
 };
