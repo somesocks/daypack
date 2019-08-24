@@ -1,3 +1,9 @@
 
 # test cases
 *.mocha.tests.js
+*.mocha.tests.d.ts
+*.perf.tests.js
+*.perf.tests.d.ts
+
+
+_testing/*

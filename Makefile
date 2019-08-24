@@ -1,12 +1,13 @@
+NPM=pnpm
 
 TASKS=./tasks
+NODE_BIN=./node_modules/.bin
 
-.PHONY: help build test
-
+.PHONY: default setup help
 
 ##
 ##
-##	Daypack
+##	daypack
 ##		this is the base project makefile
 ##
 ##
@@ -21,34 +22,26 @@ default: help
 help:
 	@grep "^##.*" ./Makefile
 
-
-
 ##		make setup - setup for local development
 ##
 setup:
-	$(NPM) install
-
-##	make build - build the package
-build: build-src build-docs
-	sh $(TASKS)/build-meta.sh
-
-build-src:
-	sh $(TASKS)/build-src.sh
-
-build-docs:
-	sh $(TASKS)/build-docs.sh
+	sh $(TASKS)/install.sh
 
 
-
-##		make test - run tests
+##		make build - build the package
 ##
-test: test-mocha test-eslint
+build:
+	sh $(TASKS)/build.sh
+
+
+
+##		make test - run test cases against the built package
+##
+test: test-mocha
 
 test-mocha:
 	sh $(TASKS)/test-mocha.sh
 
-test-eslint:
-	sh $(TASKS)/test-eslint.sh
 
 
 
