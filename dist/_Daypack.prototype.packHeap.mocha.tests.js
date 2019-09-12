@@ -18,7 +18,6 @@ describe('Daypack.prototype.packHeap', function () {
                 val: 'b',
             }
         ]);
-        console.log('packheap', res);
         assert_1.default(expected(res), 'result is not expected shape');
     });
 });
