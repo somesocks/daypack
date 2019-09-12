@@ -229,6 +229,39 @@ Daypack.prototype.map = function filter(_map, _preselector) {
 };
 
 /**
+* `reduce` unpacks everything in the heap in isolation, and calls the 'reducer' function on it,
+* to build a new reduced result
+* @name reduce
+* @param func - a filter function to call
+* @returns a new DayPack instance with only the filtered entities in the heap
+* @memberof Daypack#
+*/
+Daypack.prototype.reduce = function filter(reducer, state, preselector) {
+	preselector = preselector || ((key) => true);
+
+	const packed = this._heap;
+
+	const context : any = {
+		type_key: this._type_key,
+		id_key: this._id_key,
+		unpacked: undefined,
+		packed: undefined,
+		unpack: _unpack,
+	};
+
+	for (const key in this._heap) {
+		if (this._heap.hasOwnProperty(key) && preselector(key)) {
+			context.packed = {};
+			context.unpacked = {};
+			const val = _unpack(this._heap[key], context);
+			state = reducer(state, val);
+		}
+	}
+
+	return state;
+};
+
+/**
 * `toObject` converts the pack into a serializable object
 * @name toObject
 * @returns a serializable version of the pack

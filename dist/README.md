@@ -26,6 +26,7 @@ This library is similar to normalizr, but with a few differences:
     * [.each](#Daypack+each) ⇒
     * [.filter](#Daypack+filter) ⇒
     * [.map](#Daypack+map) ⇒
+    * [.reduce](#Daypack+reduce) ⇒
     * [.toObject](#Daypack+toObject) ⇒
     * [.fromObject](#Daypack+fromObject) ⇒
     * [.toJSON](#Daypack+toJSON) ⇒
@@ -147,6 +148,21 @@ to build a new pack
 **Params**
 
 - func - a map function to call
+
+
+* * *
+
+<a name="Daypack+reduce"></a>
+
+### daypack.reduce ⇒
+`reduce` unpacks everything in the heap in isolation, and calls the 'reducer' function on it,
+to build a new reduced result
+
+**Kind**: instance property of [<code>Daypack</code>](#Daypack)  
+**Returns**: a new DayPack instance with only the filtered entities in the heap  
+**Params**
+
+- func - a filter function to call
 
 
 * * *
