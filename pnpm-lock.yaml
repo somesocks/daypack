@@ -21,6 +21,7 @@ devDependencies:
   jsdoc-to-markdown: 4.0.1
   mocha: 3.5.3
   typescript: 3.5.3
+  vet: 2.6.0
 lockfileVersion: 5.1
 packages:
   /0x/4.8.2:
@@ -6092,6 +6093,10 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=
+  /vet/2.6.0:
+    dev: true
+    resolution:
+      integrity: sha512-Aw6qKRwPss9TtPGYMz0xPHw4+GoGvZN3v1Q8+olIA2G021/uNKvXKx6spdzlj9wJCQsvepPAbVxuEjQ6HOupJw==
   /vlq/0.2.3:
     dev: true
     resolution:
@@ -6286,3 +6291,4 @@ specifiers:
   jsdoc-to-markdown: ^4.0.1
   mocha: ^3.2.0
   typescript: ^3.5.3
+  vet: ^2.6.0

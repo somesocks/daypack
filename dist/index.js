@@ -276,6 +276,7 @@ Daypack.V1_HEAD = '__daypack__';
 * @returns a JSON string
 * @memberof Daypack#
 */
+Daypack.from = function (val) { return (val instanceof Daypack ? val : Daypack().pack(val)); };
 Daypack.pack = function (val) { return Daypack()
     .pack(val)
     .toObject(); };

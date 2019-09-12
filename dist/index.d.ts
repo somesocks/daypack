@@ -18,6 +18,7 @@ declare const Daypack: {
     * @returns a JSON string
     * @memberof Daypack#
     */
+    from(val: any): any;
     pack(val: any): any;
     unpack(val: any): any;
     /**

@@ -1,6 +1,6 @@
 {
   "name": "daypack",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "A JavaScript library for flattening and reassembling object graphs.",
   "main": "index.js",
   "repository": {
@@ -39,6 +39,7 @@
     "js-object-pretty-print": "^0.3.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^3.2.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "vet": "^2.6.0"
   }
 }

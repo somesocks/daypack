@@ -322,6 +322,8 @@ Daypack.V1_HEAD = '__daypack__';
 * @memberof Daypack#
 */
 
+Daypack.from = (val) => (val instanceof Daypack ? val : Daypack().pack(val));
+
 Daypack.pack = (val) => Daypack()
 	.pack(val)
 	.toObject();
