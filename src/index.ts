@@ -83,11 +83,13 @@ Daypack.prototype.packHeap = function packHeap(val, key) {
 		type_key: this._type_key,
 		id_key: this._id_key,
 		unpacked: {},
-		packed: this._heap,
+		packed: {},
 		pack: _pack,
 	};
 
 	const _head = _pack(val, context);
+
+	Object.assign(this._heap, context.packed);
 
 	if (key != null) { this._heap[key] = _head; }
 
