@@ -383,4 +383,22 @@ Daypack.register = (type, packer) => {
 	return Daypack;
 };
 
+Daypack.isSerializedPack = function isSerializedPack(obj) {
+	if (
+		obj &&
+		obj._daypack === 'v2' &&
+		'head' in obj &&
+		'heap' in obj
+	) {
+		return true;
+	} else if (
+		obj &&
+		Daypack.V1_HEAD in obj
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 export = Daypack;

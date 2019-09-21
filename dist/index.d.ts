@@ -29,5 +29,6 @@ declare const Daypack: {
     */
     clone(val: any): any;
     register(type: any, packer: any): any;
+    isSerializedPack(obj: any): boolean;
 };
 export = Daypack;
