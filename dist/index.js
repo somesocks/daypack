@@ -204,7 +204,7 @@ Daypack.prototype.map = function filter(_map, _preselector) {
 * @returns a new DayPack instance with only the filtered entities in the heap
 * @memberof Daypack#
 */
-Daypack.prototype.reduce = function filter(reducer, state, preselector) {
+Daypack.prototype.reduce = function reduce(reducer, state, preselector) {
     preselector = preselector || (function (key) { return true; });
     var packed = this._heap;
     var context = {
@@ -219,7 +219,7 @@ Daypack.prototype.reduce = function filter(reducer, state, preselector) {
             context.packed = {};
             context.unpacked = {};
             var val = _unpack(this._heap[key], context);
-            state = reducer(state, val);
+            state = reducer(state, val, key);
         }
     }
     return state;

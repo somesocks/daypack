@@ -32,5 +32,29 @@ describe(
 			}
 		);
 
+		it(
+			'packHeap can "delete" records',
+			() => {
+				const res = Daypack()
+					.pack([ 'a', 'b' ])
+					.packHeap({ id: 'a' })
+					.packHeap({ id: 'b' })
+					.packHeap(null, 'b')
+					.unpack();
+
+				const expected = isShape([
+					{
+						id: 'a',
+					},
+					'b'
+				]);
+
+				assert(
+					expected(res),
+					'result is not expected shape'
+				);
+			}
+		);
+
 	}
 );

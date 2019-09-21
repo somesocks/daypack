@@ -20,4 +20,19 @@ describe('Daypack.prototype.packHeap', function () {
         ]);
         assert_1.default(expected(res), 'result is not expected shape');
     });
+    it('packHeap can "delete" records', function () {
+        var res = _1.default()
+            .pack(['a', 'b'])
+            .packHeap({ id: 'a' })
+            .packHeap({ id: 'b' })
+            .packHeap(null, 'b')
+            .unpack();
+        var expected = isShape_1.default([
+            {
+                id: 'a',
+            },
+            'b'
+        ]);
+        assert_1.default(expected(res), 'result is not expected shape');
+    });
 });
