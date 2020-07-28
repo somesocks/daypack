@@ -33,7 +33,7 @@ export type Pack = {
   pack: (this: Pack, val: any) => Pack,
   packHeap: (this: Pack, val: any, key?: string) => Pack,
 
-  unpack: (this: Pack) => any,
+  unpack: (this: Pack, val?: any) => any,
 
   each: (this: Pack) => Pack,
   filter: (this: Pack, filter: Filter, preFilter?: PreFilter) => Pack,
