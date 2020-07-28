@@ -16,6 +16,7 @@ export type V1SerializedPack = {
 
 export type SerializedPack = V2SerializedPack;
 
+export type EachCall = (val : any, key : string) => void;
 export type Filter = (val : any, key : string) => boolean;
 export type PreFilter = (key : string) => boolean;
 export type Mapper = (val: any, key : string) => any;
@@ -35,7 +36,7 @@ export type Pack = {
 
   unpack: (this: Pack, val?: any) => any,
 
-  each: (this: Pack) => Pack,
+  each: (this: Pack, each: EachCall) => Pack,
   filter: (this: Pack, filter: Filter, preFilter?: PreFilter) => Pack,
   map: (this: Pack, mapper: Mapper, preFilter?: PreFilter) => Pack,
   reduce: (this: Pack, reducer: Reducer, state?: any, preFilter?: PreFilter) => any,
