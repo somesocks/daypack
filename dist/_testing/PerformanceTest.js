@@ -1,5 +1,6 @@
 "use strict";
 // import now from './now';
+//eslint-disable-next-line @typescript-eslint/unbound-method
 var isArray = Array.isArray;
 var RUN_TIME = 1024;
 var PerformanceTest = function (test) { return function () {

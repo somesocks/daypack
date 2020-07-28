@@ -1,5 +1,7 @@
 /** @namespace Daypack */
 
+import { SerializedPack, Pack } from './types';
+
 import packers from './_packers';
 
 const _packers = packers.packers;
@@ -12,8 +14,8 @@ const _unpack = packers.unpack;
 * @constructor
 * @memberof Daypack
 */
-const Daypack = function (this : any) {
-	const self = this instanceof Daypack ? this : Object.create(Daypack.prototype);
+const Daypack = function (this : any) : Pack {
+	const self: Pack = this instanceof Daypack ? this : Object.create(Daypack.prototype);
 
 	self._head = undefined;
 	self._heap = {};
@@ -31,7 +33,7 @@ const Daypack = function (this : any) {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.withHeap = function withHeap(heap) {
+Daypack.prototype.withHeap = function withHeap(this: Pack, heap) {
 	this._heap = heap;
 	return this;
 };
@@ -43,7 +45,7 @@ Daypack.prototype.withHeap = function withHeap(heap) {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.withHead = function withHead(head) {
+Daypack.prototype.withHead = function withHead(this: Pack, head) {
 	this._head = head;
 	return this;
 };
@@ -55,7 +57,7 @@ Daypack.prototype.withHead = function withHead(head) {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.pack = function pack(val) {
+Daypack.prototype.pack = function pack(this: Pack, val) {
 	const context = {
 		type_key: this._type_key,
 		id_key: this._id_key,
@@ -78,7 +80,7 @@ Daypack.prototype.pack = function pack(val) {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.packHeap = function packHeap(val, key) {
+Daypack.prototype.packHeap = function packHeap(this : Pack, val, key) {
 	const context = {
 		type_key: this._type_key,
 		id_key: this._id_key,
@@ -105,7 +107,7 @@ Daypack.prototype.packHeap = function packHeap(val, key) {
 * @returns the unpacked head
 * @memberof Daypack#
 */
-Daypack.prototype.unpack = function unpack(val) {
+Daypack.prototype.unpack = function unpack(this: Pack, val) {
 	val = arguments.length > 0 ? val : this._head;
 
 	const context = {
@@ -126,7 +128,7 @@ Daypack.prototype.unpack = function unpack(val) {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.each = function each(func) {
+Daypack.prototype.each = function each(this: Pack, func) {
 	const packed = this._heap;
 
 	const context : any = {
@@ -138,7 +140,7 @@ Daypack.prototype.each = function each(func) {
 	};
 
 	for (let key in this._heap) {
-		if (this._heap.hasOwnProperty(key)) {
+		if (Object.prototype.hasOwnProperty.call(this._heap, key)) {
 			context.packed = {};
 			context.unpacked = {};
 			const val = _unpack(this._heap[key], context);
@@ -157,7 +159,7 @@ Daypack.prototype.each = function each(func) {
 * @returns a new DayPack instance with only the filtered entities in the heap
 * @memberof Daypack#
 */
-Daypack.prototype.filter = function filter(_filter, _preselector) {
+Daypack.prototype.filter = function filter(this: Pack, _filter, _preselector) {
 	_preselector = _preselector || ((key) => true);
 
 	const packed = this._heap;
@@ -173,7 +175,7 @@ Daypack.prototype.filter = function filter(_filter, _preselector) {
 	};
 
 	for (const key in this._heap) {
-		if (this._heap.hasOwnProperty(key) && _preselector(key)) {
+		if (Object.prototype.hasOwnProperty.call(this._heap, key) && _preselector(key)) {
 			context.packed = {};
 			context.unpacked = {};
 			const val = _unpack(this._heap[key], context);
@@ -196,7 +198,7 @@ Daypack.prototype.filter = function filter(_filter, _preselector) {
 * @returns a new DayPack instance with the mapped entities in the heap
 * @memberof Daypack#
 */
-Daypack.prototype.map = function filter(_map, _preselector) {
+Daypack.prototype.map = function filter(this: Pack, _map, _preselector) {
 	_preselector = _preselector || ((key) => true);
 
 	const packed = this._heap;
@@ -212,7 +214,7 @@ Daypack.prototype.map = function filter(_map, _preselector) {
 	};
 
 	for (const key in this._heap) {
-		if (this._heap.hasOwnProperty(key)) {
+		if (Object.prototype.hasOwnProperty.call(this._heap, key)) {
 			if (_preselector(key)) {
 				context.packed = {};
 				context.unpacked = {};
@@ -238,7 +240,7 @@ Daypack.prototype.map = function filter(_map, _preselector) {
 * @returns a new DayPack instance with only the filtered entities in the heap
 * @memberof Daypack#
 */
-Daypack.prototype.reduce = function reduce(reducer, state, preselector) {
+Daypack.prototype.reduce = function reduce(this: Pack, reducer, state, preselector) {
 	preselector = preselector || ((key) => true);
 
 	const packed = this._heap;
@@ -252,7 +254,7 @@ Daypack.prototype.reduce = function reduce(reducer, state, preselector) {
 	};
 
 	for (const key in this._heap) {
-		if (this._heap.hasOwnProperty(key) && preselector(key)) {
+		if (Object.prototype.hasOwnProperty.call(this._heap, key) && preselector(key)) {
 			context.packed = {};
 			context.unpacked = {};
 			const val = _unpack(this._heap[key], context);
@@ -269,7 +271,7 @@ Daypack.prototype.reduce = function reduce(reducer, state, preselector) {
 * @returns a serializable version of the pack
 * @memberof Daypack#
 */
-Daypack.prototype.toObject = function toObject() {
+Daypack.prototype.toObject = function toObject(this: Pack) {
 	if (Daypack.V1_OUTPUT) {
 		const pack = {};
 
@@ -300,7 +302,7 @@ Daypack.prototype.toObject = function toObject() {
 * @returns this
 * @memberof Daypack#
 */
-Daypack.prototype.fromObject = function fromObject(obj) {
+Daypack.prototype.fromObject = function fromObject(this: Pack, obj) {
 	if (
 		obj._daypack === 'v2' &&
 		'head' in obj &&
@@ -327,7 +329,7 @@ Daypack.prototype.fromObject = function fromObject(obj) {
 * @returns a JSON string
 * @memberof Daypack#
 */
-Daypack.prototype.toJSON = function toJSON() {
+Daypack.prototype.toJSON = function toJSON(this: Pack) {
 	return JSON.stringify(this.toObject(), null, '\t');
 };
 
@@ -338,7 +340,7 @@ Daypack.prototype.toJSON = function toJSON() {
 * @returns a JSON string
 * @memberof Daypack#
 */
-Daypack.prototype.fromJSON = function fromJSON(json) {
+Daypack.prototype.fromJSON = function fromJSON(this: Pack, json) {
 	return this.fromObject(JSON.parse(json));
 };
 
@@ -357,13 +359,16 @@ Daypack.V1_HEAD = '__daypack__';
 * @memberof Daypack#
 */
 
-Daypack.from = (val) => (val instanceof Daypack ? val : Daypack().pack(val));
+Daypack.from = (val: any) : Pack => {
+  const pack: Pack = (val instanceof Daypack ? val as Pack : Daypack().pack(val));
+  return pack;
+}
 
-Daypack.pack = (val) => Daypack()
+Daypack.pack = (val: any) : SerializedPack => Daypack()
 	.pack(val)
 	.toObject();
 
-Daypack.unpack = (val) => Daypack()
+Daypack.unpack = (val: any) : any => Daypack()
 	.fromObject(val)
 	.unpack();
 
@@ -373,7 +378,7 @@ Daypack.unpack = (val) => Daypack()
 * @returns an flattened object
 * @memberof Daypack
 */
-Daypack.clone = (val) => Daypack()
+Daypack.clone = (val : any) : any => Daypack()
 	.pack(val)
 	.unpack();
 

@@ -3,6 +3,8 @@ NPM=pnpm
 TASKS=./tasks
 NODE_BIN=./node_modules/.bin
 
+SHELL := /bin/bash
+
 .PHONY: default setup help
 
 ##
@@ -25,22 +27,25 @@ help:
 ##		make setup - setup for local development
 ##
 setup:
-	sh $(TASKS)/install.sh
+	$(SHELL) $(TASKS)/install.sh
 
 
 ##		make build - build the package
 ##
 build:
-	sh $(TASKS)/build.sh
+	$(SHELL) $(TASKS)/build.sh
 
 
 
 ##		make test - run test cases against the built package
 ##
-test: test-mocha
+test: test-mocha test-eslint
 
 test-mocha:
-	sh $(TASKS)/test-mocha.sh
+	$(SHELL) $(TASKS)/test-mocha.sh
+
+test-eslint:
+	$(SHELL) $(TASKS)/test-eslint.sh
 
 
 
@@ -48,12 +53,12 @@ test-mocha:
 ##		make package-check - list the files that will be present in the package
 ##
 package-check:
-	sh $(TASKS)/package-check.sh
+	$(SHELL) $(TASKS)/package-check.sh
 
 ##		make package-publish - publish the current dist dir
 ##
 package-publish:
-	sh $(TASKS)/package-publish.sh
+	$(SHELL) $(TASKS)/package-publish.sh
 
 ##
 ##

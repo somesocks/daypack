@@ -1,6 +1,7 @@
 
 const packers = {};
 
+//eslint-disable-next-line @typescript-eslint/unbound-method
 const isArray = Array.isArray ||
 	((val) => Object.prototype.toString.call(val) === '[object Array]');
 
@@ -34,7 +35,7 @@ const unpack = function (val, context) {
 			}
 			break;
 		default:
-		 throw new Error('daypack: cannot infer type');
+      throw new Error('daypack: cannot infer type');
 	}
 
 	// const _type = type(val, context);
@@ -69,7 +70,7 @@ const unpack = function (val, context) {
 					unpacked[id] = res;
 
 					for (const key in val) {
-						if (val.hasOwnProperty(key) && key !== id_key) {
+						if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
 							res[key] = unpack(val[key], context);
 						}
 					}
@@ -80,7 +81,7 @@ const unpack = function (val, context) {
 				const res = {};
 
 				for (const key in val) {
-					if (val.hasOwnProperty(key) && key !== id_key) {
+					if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
 						res[key] = unpack(val[key], context);
 					}
 				}
@@ -136,7 +137,7 @@ const pack = function (val, context) {
 			}
 			break;
 		default:
-		 throw new Error('daypack: cannot infer type');
+      throw new Error('daypack: cannot infer type');
 	}
 
 	// const _type = type(val, context);
@@ -179,7 +180,7 @@ const pack = function (val, context) {
 					packed[id] = res;
 
 					for (const key in val) {
-						if (val.hasOwnProperty(key) && key !== id_key) {
+						if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
 							res[key] = pack(val[key], context);
 						}
 					}
@@ -191,7 +192,7 @@ const pack = function (val, context) {
 				res[id_key] = id;
 
 				for (const key in val) {
-					if (val.hasOwnProperty(key) && key !== id_key) {
+					if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
 						res[key] = pack(val[key], context);
 					}
 				}

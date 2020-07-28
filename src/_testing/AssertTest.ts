@@ -2,6 +2,7 @@
 import chai from 'chai';
 const { assert } = chai;
 
+//eslint-disable-next-line @typescript-eslint/unbound-method
 const isArray = Array.isArray;
 
 const AssertTest = (test) => {

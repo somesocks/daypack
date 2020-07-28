@@ -1,6 +1,7 @@
 
 // import now from './now';
 
+//eslint-disable-next-line @typescript-eslint/unbound-method
 const isArray = Array.isArray;
 
 const RUN_TIME = 1024;

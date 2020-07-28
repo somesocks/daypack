@@ -1,4 +1,5 @@
 /** @namespace Daypack */
+import { Pack } from './types';
 /**
 * @name Daypack
 * @class
@@ -6,7 +7,7 @@
 * @memberof Daypack
 */
 declare const Daypack: {
-    (this: any): any;
+    (this: any): Pack;
     ID_KEY: string;
     TYPE_KEY: string;
     V1_OUTPUT: boolean;
@@ -18,8 +19,8 @@ declare const Daypack: {
     * @returns a JSON string
     * @memberof Daypack#
     */
-    from(val: any): any;
-    pack(val: any): any;
+    from(val: any): Pack;
+    pack(val: any): import("./types").V2SerializedPack;
     unpack(val: any): any;
     /**
     * A function that packs a JavaScript value.

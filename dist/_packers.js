@@ -1,5 +1,6 @@
 "use strict";
 var packers = {};
+//eslint-disable-next-line @typescript-eslint/unbound-method
 var isArray = Array.isArray ||
     (function (val) { return Object.prototype.toString.call(val) === '[object Array]'; });
 var unpack = function (val, context) {
@@ -71,7 +72,7 @@ var unpack = function (val, context) {
                     res[id_key] = id;
                     unpacked[id] = res;
                     for (var key in val) {
-                        if (val.hasOwnProperty(key) && key !== id_key) {
+                        if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
                             res[key] = unpack(val[key], context);
                         }
                     }
@@ -81,7 +82,7 @@ var unpack = function (val, context) {
             else {
                 var res = {};
                 for (var key in val) {
-                    if (val.hasOwnProperty(key) && key !== id_key) {
+                    if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
                         res[key] = unpack(val[key], context);
                     }
                 }
@@ -184,7 +185,7 @@ var pack = function (val, context) {
                     res[id_key] = id;
                     packed[id] = res;
                     for (var key in val) {
-                        if (val.hasOwnProperty(key) && key !== id_key) {
+                        if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
                             res[key] = pack(val[key], context);
                         }
                     }
@@ -195,7 +196,7 @@ var pack = function (val, context) {
                 var res = {};
                 res[id_key] = id;
                 for (var key in val) {
-                    if (val.hasOwnProperty(key) && key !== id_key) {
+                    if (Object.prototype.hasOwnProperty.call(val, key) && key !== id_key) {
                         res[key] = pack(val[key], context);
                     }
                 }

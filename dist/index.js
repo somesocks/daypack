@@ -119,7 +119,7 @@ Daypack.prototype.each = function each(func) {
         unpack: _unpack,
     };
     for (var key in this._heap) {
-        if (this._heap.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(this._heap, key)) {
             context.packed = {};
             context.unpacked = {};
             var val = _unpack(this._heap[key], context);
@@ -148,7 +148,7 @@ Daypack.prototype.filter = function filter(_filter, _preselector) {
         unpack: _unpack,
     };
     for (var key in this._heap) {
-        if (this._heap.hasOwnProperty(key) && _preselector(key)) {
+        if (Object.prototype.hasOwnProperty.call(this._heap, key) && _preselector(key)) {
             context.packed = {};
             context.unpacked = {};
             var val = _unpack(this._heap[key], context);
@@ -180,7 +180,7 @@ Daypack.prototype.map = function filter(_map, _preselector) {
         unpack: _unpack,
     };
     for (var key in this._heap) {
-        if (this._heap.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(this._heap, key)) {
             if (_preselector(key)) {
                 context.packed = {};
                 context.unpacked = {};
@@ -215,7 +215,7 @@ Daypack.prototype.reduce = function reduce(reducer, state, preselector) {
         unpack: _unpack,
     };
     for (var key in this._heap) {
-        if (this._heap.hasOwnProperty(key) && preselector(key)) {
+        if (Object.prototype.hasOwnProperty.call(this._heap, key) && preselector(key)) {
             context.packed = {};
             context.unpacked = {};
             var val = _unpack(this._heap[key], context);
@@ -305,7 +305,10 @@ Daypack.V1_HEAD = '__daypack__';
 * @returns a JSON string
 * @memberof Daypack#
 */
-Daypack.from = function (val) { return (val instanceof Daypack ? val : Daypack().pack(val)); };
+Daypack.from = function (val) {
+    var pack = (val instanceof Daypack ? val : Daypack().pack(val));
+    return pack;
+};
 Daypack.pack = function (val) { return Daypack()
     .pack(val)
     .toObject(); };

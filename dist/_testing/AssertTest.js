@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var chai_1 = __importDefault(require("chai"));
 var assert = chai_1.default.assert;
+//eslint-disable-next-line @typescript-eslint/unbound-method
 var isArray = Array.isArray;
 var AssertTest = function (test) {
     it("assert test " + (test.label || ''), function (done) {

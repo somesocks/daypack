@@ -98,7 +98,7 @@ describe('Daypack', () => {
 				},
 			};
 
-			const output = Daypack().fromObject(input).toObject();
+			const output = Daypack().fromObject(input as any).toObject();
 			chai.assert.deepEqual(output, expected);
 		}
 	);

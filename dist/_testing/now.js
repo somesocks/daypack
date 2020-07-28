@@ -4,7 +4,7 @@ var _window;
 try {
     _window = window;
 }
-catch (err) { }
+catch (err) { } //eslint-disable-line no-empty
 if (_window && _window.performance && _window.performance.now) {
     now = function () { return _window.performance.now(); };
 }
